@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="page-title">Enlightenment — A Deep Research</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&family=Noto+Serif+SC:wght@300;400;600&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --bg:           #06080e;
+  --bg2:          #0c1119;
+  --surface:      #0d1120;
+  --surface2:     #111827;
+  --surface3:     #1a2333;
+  --border:       #1c2b3e;
+  --border2:      #243347;
+  --teal:         #22d3a4;
+  --teal-dim:     rgba(34,211,164,0.10);
+  --teal-glow:    rgba(34,211,164,0.20);
+  --amber:        #f59e0b;
+  --amber-dim:    rgba(245,158,11,0.10);
+  --red:          #f87171;
+  --red-dim:      rgba(248,113,113,0.09);
+  --blue:         #60a5fa;
+  --blue-dim:     rgba(96,165,250,0.09);
+  --violet:       #a78bfa;
+  --violet-dim:   rgba(167,139,250,0.09);
+  --text:         #dde5f0;
+  --dim:          #8aa0b8;
+  --muted:        #445870;
+  --white:        #ffffff;
+  --topbar-bg:    rgba(6,8,14,0.97);
+  --topbar-border:#1c2b3e;
+  --sidebar-bg:   #07090f;
+  --sidebar-border:#1c2b3e;
+  --nav-color:    #2a4060;
+  --nav-hover:    #8aa0b8;
+  --nav-active-bg:rgba(34,211,164,0.06);
+  --nav-active-color:#22d3a4;
+  --nav-active-border:#22d3a4;
+  --card-bg:      #0d1120;
+  --card-border:  #1c2b3e;
+  --callout-bg:   rgba(245,158,11,0.06);
+  --callout-border:#f59e0b;
+  --callout-text: #c8924a;
+  --ver-color:    #22d3a4;
+  --ver-bg:       rgba(34,211,164,0.06);
+  --ver-border:   rgba(34,211,164,0.20);
+  --change-text:  #4a6080;
+  --change-ver:   #22d3a4;
+  --change-auth:  #3a5070;
+  --change-border:#1c2b3e;
+  --divider:      #1c2b3e;
+  --footer-color: #1c2b3e;
+  --tip-bg:       rgba(34,211,164,0.04);
+  --tip-border:   rgba(34,211,164,0.15);
+  --tip-label:    #22a880;
+  --tip-text:     #6abfa8;
+  --risk-bg:      rgba(248,113,113,0.05);
+  --risk-border:  rgba(248,113,113,0.25);
+  --risk-title:   #c05a5a;
+  --risk-text:    #8a5a5a;
+  --person-bg:    #0d1120;
+  --person-border:#1c3050;
+  --person-name:  #60a5fa;
+  --person-role:  #445870;
+}
+
+body.light {
+  --bg:           #f4f1ec;
+  --bg2:          #ece8e0;
+  --surface:      #faf7f2;
+  --surface2:     #f2ede4;
+  --surface3:     #e8e2d8;
+  --border:       #d4ccc0;
+  --border2:      #c8bfb0;
+  --teal:         #0e7a5a;
+  --teal-dim:     rgba(14,122,90,0.08);
+  --teal-glow:    rgba(14,122,90,0.16);
+  --amber:        #b45309;
+  --amber-dim:    rgba(180,83,9,0.08);
+  --red:          #dc2626;
+  --red-dim:      rgba(220,38,38,0.07);
+  --blue:         #2563eb;
+  --blue-dim:     rgba(37,99,235,0.08);
+  --violet:       #7c3aed;
+  --violet-dim:   rgba(124,58,237,0.07);
+  --text:         #1a1e2e;
+  --dim:          #5a6880;
+  --muted:        #8a96a8;
+  --topbar-bg:    #1a1e2e;
+  --topbar-border:#252a3a;
+  --sidebar-bg:   #ece8e0;
+  --sidebar-border:#d4ccc0;
+  --nav-color:    #9090a0;
+  --nav-hover:    #2a3040;
+  --nav-active-bg:rgba(14,122,90,0.07);
+  --nav-active-color:#0e7a5a;
+  --nav-active-border:#0e7a5a;
+  --card-bg:      #faf7f2;
+  --card-border:  #d4ccc0;
+  --callout-bg:   #fdf5eb;
+  --callout-border:#b45309;
+  --callout-text: #7a3a10;
+  --ver-color:    #0e7a5a;
+  --ver-bg:       rgba(14,122,90,0.07);
+  --ver-border:   rgba(14,122,90,0.25);
+  --change-text:  #4a5868;
+  --change-ver:   #0e7a5a;
+  --change-auth:  #8a96a8;
+  --change-border:#d4ccc0;
+  --divider:      #d4ccc0;
+  --footer-color: #c8bfb0;
+  --tip-bg:       rgba(14,122,90,0.05);
+  --tip-border:   rgba(14,122,90,0.20);
+  --tip-label:    #5aaa8a;
+  --tip-text:     #1a5a40;
+  --risk-bg:      #fff5f5;
+  --risk-border:  rgba(220,38,38,0.30);
+  --risk-title:   #b02020;
+  --risk-text:    #602020;
+  --person-bg:    #f0f4ff;
+  --person-border:#b0c0e0;
+  --person-name:  #2048a0;
+  --person-role:  #506080;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Lora', Georgia, serif;
+  font-size: 15px;
+  line-height: 1.8;
+  min-height: 100vh;
+  transition: background 0.25s, color 0.25s;
+}
+body.zh { font-family: 'Noto Serif SC', serif; }
+
+body:not(.light)::before {
+  content: '';
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px);
+  pointer-events: none; z-index: 9999;
+}
+
+/* ── Topbar ── */
+.topbar {
+  position: fixed; top:0; left:0; right:0; height:52px;
+  background: var(--topbar-bg);
+  border-bottom: 1px solid var(--topbar-border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 20px;
+  z-index: 200;
+  backdrop-filter: blur(8px);
+}
+.topbar-left  { display:flex; align-items:center; gap:12px; }
+.topbar-right { display:flex; align-items:center; gap:8px; }
+
+.pulse-dot {
+  width:7px; height:7px; border-radius:50%;
+  background: var(--teal); box-shadow: 0 0 6px var(--teal);
+  animation: pulse 2.4s ease-in-out infinite; flex-shrink:0;
+}
+@keyframes pulse { 0%,100%{opacity:1;box-shadow:0 0 6px var(--teal)}50%{opacity:.35;box-shadow:0 0 2px var(--teal)} }
+
+.topbar-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.05rem; font-weight: 600;
+  color: var(--white); letter-spacing: 0.01em;
+}
+body.light .topbar-name { color: #f0f4ff; }
+body.zh .topbar-name { font-family: 'Noto Serif SC', serif; }
+
+.topbar-subtitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--teal); opacity: 0.85;
+}
+body.zh .topbar-subtitle { letter-spacing: 0.06em; text-transform: none; font-size: 11px; }
+
+.version-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.12em;
+  color: var(--ver-color);
+  background: var(--ver-bg);
+  border: 1px solid var(--ver-border);
+  padding: 3px 10px;
+}
+
+/* ── Toggle buttons ── */
+.theme-toggle, .lang-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  height: 28px;
+  border-radius: 4px; cursor: pointer;
+  font-size: 12px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  padding: 0 8px;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.theme-toggle { width: 28px; font-size: 13px; padding: 0; }
+.theme-toggle:hover, .lang-toggle:hover { border-color: var(--teal); color: var(--teal); }
+.lang-toggle.active { border-color: var(--teal); color: var(--teal); background: var(--teal-dim); }
+
+.topbar-divider {
+  width: 1px; height: 18px;
+  background: var(--border); flex-shrink: 0;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  position: fixed; top:52px; left:0;
+  width: 200px; height: calc(100vh - 52px);
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--sidebar-border);
+  padding: 24px 0; overflow-y: auto;
+  z-index: 100; transition: background 0.25s;
+}
+.sidebar-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--muted); padding: 0 20px 14px; display: block; opacity: 0.5;
+}
+body.zh .sidebar-label { letter-spacing: 0.1em; text-transform: none; }
+.nav-item {
+  display: flex; align-items: baseline; gap: 8px;
+  padding: 8px 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: var(--nav-color);
+  text-decoration: none; letter-spacing: 0.04em;
+  border-left: 2px solid transparent;
+  cursor: pointer; transition: all 0.15s; line-height: 1.4;
+}
+body.zh .nav-item { font-family: 'Noto Serif SC', serif; font-size: 12px; letter-spacing: 0.02em; }
+.nav-item:hover { color: var(--nav-hover); border-left-color: var(--border); }
+.nav-item.active {
+  color: var(--nav-active-color);
+  border-left-color: var(--nav-active-border);
+  background: var(--nav-active-bg);
+}
+.nav-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; opacity: 0.6; flex-shrink: 0; }
+.nav-dot  { opacity: 0.4; flex-shrink: 0; }
+
+/* ── Main ── */
+.main { margin-left: 200px; padding: 80px 52px 80px 48px; max-width: 1080px; }
+@media (max-width: 860px) {
+  .sidebar { display: none; }
+  .main { margin-left: 0; padding: 72px 20px 48px; }
+}
+
+/* ── Page header ── */
+.kicker {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--teal); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+body.zh .kicker { letter-spacing: 0.06em; text-transform: none; font-family: 'Noto Serif SC', serif; font-size: 11px; }
+.kicker::after { content:''; flex:1; height:1px; background:var(--border); }
+
+h1 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300; line-height: 1.2;
+  color: var(--white); margin-bottom: 12px; letter-spacing: -0.01em;
+}
+body.zh h1 { font-family: 'Noto Serif SC', serif; font-weight: 300; letter-spacing: 0.05em; }
+body.light h1 { color: var(--text); }
+
+.subtitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 36px;
+}
+body.zh .subtitle { font-family: 'Noto Serif SC', serif; text-transform: none; letter-spacing: 0.04em; }
+
+.divider { border: none; border-top: 1px solid var(--divider); margin: 40px 0; }
+.section { margin-bottom: 4px; }
+
+h2 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.5rem; font-weight: 400;
+  color: var(--white); margin-bottom: 20px;
+  display: flex; align-items: baseline; gap: 12px;
+}
+body.zh h2 { font-family: 'Noto Serif SC', serif; font-weight: 400; }
+body.light h2 { color: var(--text); }
+.sec-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--teal); opacity: 0.7; }
+
+h3 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.15rem; font-weight: 600;
+  color: var(--text); margin: 24px 0 10px;
+}
+body.zh h3 { font-family: 'Noto Serif SC', serif; }
+
+.body-text {
+  font-size: 15px; line-height: 1.85; color: var(--dim);
+  margin-bottom: 16px;
+}
+body.zh .body-text { line-height: 2.0; }
+.body-text + .body-text { margin-top: 4px; }
+
+/* ── Callouts ── */
+.callout {
+  background: var(--callout-bg); border-left: 3px solid var(--callout-border);
+  border-radius: 0 4px 4px 0; padding: 16px 20px; margin: 20px 0;
+  font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.8;
+  color: var(--callout-text); letter-spacing: 0.02em;
+}
+body.zh .callout { font-family: 'Noto Serif SC', serif; font-size: 13px; letter-spacing: 0.04em; }
+.callout-violet {
+  background: var(--violet-dim); border-left: 3px solid var(--violet);
+  border-radius: 0 4px 4px 0; padding: 16px 20px; margin: 20px 0;
+  font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.8;
+  color: var(--violet); letter-spacing: 0.02em;
+}
+body.zh .callout-violet { font-family: 'Noto Serif SC', serif; font-size: 13px; letter-spacing: 0.04em; }
+.callout-teal {
+  background: var(--teal-dim); border-left: 3px solid var(--teal);
+  border-radius: 0 4px 4px 0; padding: 16px 20px; margin: 20px 0;
+  font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.8;
+  color: var(--teal); letter-spacing: 0.02em;
+}
+body.zh .callout-teal { font-family: 'Noto Serif SC', serif; font-size: 13px; letter-spacing: 0.04em; }
+
+/* ── Cards ── */
+.card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 20px 0; }
+@media (max-width: 860px) { .card-grid { grid-template-columns: 1fr; } }
+@media (min-width: 861px) and (max-width: 1100px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
+.card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 6px; padding: 18px 20px; }
+.card-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--teal); margin-bottom: 8px; opacity: 0.8;
+}
+body.zh .card-label { font-family: 'Noto Serif SC', serif; text-transform: none; letter-spacing: 0.06em; font-size: 11px; }
+.card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+body.zh .card-title { font-family: 'Noto Serif SC', serif; }
+.card-text { font-size: 13px; line-height: 1.7; color: var(--dim); }
+body.zh .card-text { line-height: 1.9; }
+
+/* ── Tips ── */
+.tips { display: grid; gap: 10px; margin: 20px 0; }
+.tip {
+  background: var(--tip-bg); border: 1px solid var(--tip-border);
+  border-radius: 4px; padding: 12px 16px;
+  display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start;
+}
+.tip-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--tip-label); white-space: nowrap; padding-top: 2px;
+}
+body.zh .tip-label { font-family: 'Noto Serif SC', serif; text-transform: none; letter-spacing: 0.04em; font-size: 11px; white-space: normal; }
+.tip-text { font-size: 13px; line-height: 1.65; color: var(--tip-text); }
+body.zh .tip-text { line-height: 1.9; }
+
+/* ── Risk cards ── */
+.risk-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 20px 0; }
+@media (max-width: 860px) { .risk-grid { grid-template-columns: 1fr; } }
+@media (min-width: 861px) and (max-width: 1100px) { .risk-grid { grid-template-columns: repeat(2, 1fr); } }
+.risk-card { background: var(--risk-bg); border: 1px solid var(--risk-border); border-radius: 6px; padding: 16px 18px; }
+.risk-title {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  font-weight: 600; letter-spacing: 0.08em; color: var(--risk-title); margin-bottom: 8px;
+}
+body.zh .risk-title { font-family: 'Noto Serif SC', serif; letter-spacing: 0.04em; }
+.risk-text { font-size: 13px; line-height: 1.65; color: var(--risk-text); }
+body.zh .risk-text { line-height: 1.9; }
+
+/* ── Tag row ── */
+.tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 20px; }
+.tag {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em;
+  padding: 3px 10px; border-radius: 3px; border: 1px solid var(--border2); color: var(--muted);
+}
+body.zh .tag { font-family: 'Noto Serif SC', serif; letter-spacing: 0.04em; font-size: 11px; }
+.tag.active { border-color: var(--teal); color: var(--teal); background: var(--teal-dim); }
+
+/* ── Timeline ── */
+.timeline { display: grid; gap: 0; margin: 20px 0; position: relative; }
+.timeline::before {
+  content: ''; position: absolute; left: 18px; top: 24px; bottom: 24px;
+  width: 1px; background: var(--border);
+}
+.tl-item { display: grid; grid-template-columns: 36px 1fr; gap: 16px; padding: 16px 0; }
+.tl-dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--surface); border: 2px solid var(--teal);
+  margin-top: 4px; flex-shrink: 0; position: relative; z-index: 1;
+  box-shadow: 0 0 8px var(--teal-dim);
+}
+.tl-title {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  font-weight: 600; letter-spacing: 0.08em; color: var(--teal); margin-bottom: 6px;
+}
+body.zh .tl-title { font-family: 'Noto Serif SC', serif; letter-spacing: 0.04em; }
+.tl-text { font-size: 13px; line-height: 1.65; color: var(--dim); }
+body.zh .tl-text { line-height: 1.9; }
+
+/* ── Change history ── */
+.change-table { width:100%; border-collapse: collapse; font-family: 'JetBrains Mono', monospace; font-size: 12px; table-layout: fixed; }
+.change-table th {
+  text-align: left; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--muted); padding: 6px 12px; border-bottom: 1px solid var(--change-border); font-weight: normal;
+}
+.change-table th:first-child  { width: 12%; }
+.change-table th:nth-child(2) { width: 12%; }
+.change-table th:nth-child(3) { width: 76%; }
+body.zh .change-table th { font-family: 'Noto Serif SC', serif; text-transform: none; letter-spacing: 0.06em; }
+.change-table td {
+  padding: 10px 12px; color: var(--change-text);
+  border-bottom: 1px solid var(--change-border); vertical-align: top; line-height: 1.6;
+  word-wrap: break-word; overflow-wrap: break-word;
+}
+body.zh .change-table td { font-family: 'Noto Serif SC', serif; line-height: 1.8; }
+.change-table td:first-child { color: var(--change-ver); font-family: 'JetBrains Mono', monospace; }
+.change-table td:nth-child(2) { color: var(--change-auth); }
+
+.footer-note {
+  text-align: center; font-size: 11px; color: var(--footer-color);
+  font-family: 'JetBrains Mono', monospace; letter-spacing: 0.1em; margin-top: 24px;
+}
+body.zh .footer-note { font-family: 'Noto Serif SC', serif; letter-spacing: 0.04em; }
+</style>
+</head>
+<body>
+
+<!-- ── Topbar ── -->
+<header class="topbar">
+  <div class="topbar-left">
+    <span class="pulse-dot"></span>
+    <span class="topbar-name" data-i18n="topbar-name">Enlightenment</span>
+    <span class="topbar-subtitle" data-i18n="topbar-subtitle">Deep Research</span>
+  </div>
+  <div class="topbar-right">
+    <span class="version-badge">v2026.5.16</span>
+    <div class="topbar-divider"></div>
+    <button class="lang-toggle" id="lang-btn" onclick="toggleLang()" title="Switch language / 切换语言">中文</button>
+    <button class="theme-toggle" onclick="toggleTheme()" id="toggle-btn" title="Toggle light/dark">☀</button>
+  </div>
+</header>
+
+<!-- ── Sidebar ── -->
+<nav class="sidebar">
+  <span class="sidebar-label" data-i18n="nav-label">Sections</span>
+  <a class="nav-item" onclick="goTo('sec-overview')"><span class="nav-num">01</span><span class="nav-dot">·</span><span data-i18n="nav-01">Overview</span></a>
+  <a class="nav-item" onclick="goTo('sec-traditions')"><span class="nav-num">02</span><span class="nav-dot">·</span><span data-i18n="nav-02">Across Traditions</span></a>
+  <a class="nav-item" onclick="goTo('sec-sadhguru-definition')"><span class="nav-num">03</span><span class="nav-dot">·</span><span data-i18n="nav-03">Sadhguru's View</span></a>
+  <a class="nav-item" onclick="goTo('sec-experience')"><span class="nav-num">04</span><span class="nav-dot">·</span><span data-i18n="nav-04">His Experience</span></a>
+  <a class="nav-item" onclick="goTo('sec-looks-like')"><span class="nav-num">05</span><span class="nav-dot">·</span><span data-i18n="nav-05">What It Looks Like</span></a>
+  <a class="nav-item" onclick="goTo('sec-four-paths')"><span class="nav-num">06</span><span class="nav-dot">·</span><span data-i18n="nav-06">Four Paths</span></a>
+  <a class="nav-item" onclick="goTo('sec-how-to')"><span class="nav-num">07</span><span class="nav-dot">·</span><span data-i18n="nav-07">How to Approach</span></a>
+  <a class="nav-item" onclick="goTo('sec-karma')"><span class="nav-num">08</span><span class="nav-dot">·</span><span data-i18n="nav-08">Karma &amp; Liberation</span></a>
+  <a class="nav-item" onclick="goTo('sec-misconceptions')"><span class="nav-num">09</span><span class="nav-dot">·</span><span data-i18n="nav-09">Misconceptions</span></a>
+  <a class="nav-item" onclick="goTo('sec-change-history')"><span class="nav-num">10</span><span class="nav-dot">·</span><span data-i18n="nav-10">Change History</span></a>
+</nav>
+
+<!-- ── Main ── -->
+<main class="main">
+
+  <div class="kicker" data-i18n="page-kicker">Spiritual Research · Sadhguru · Yogic Science</div>
+  <h1 data-i18n="page-h1">The Nature of Enlightenment</h1>
+  <p class="subtitle" data-i18n="page-subtitle">What it is · What it looks like · How to approach it — through the lens of Sadhguru &amp; world traditions</p>
+  <hr class="divider">
+
+  <!-- §01 -->
+  <div id="sec-overview" class="section">
+    <h2><span class="sec-num">01</span> <span data-i18n="s01-h2">Overview: What Is Enlightenment?</span></h2>
+    <p class="body-text" data-i18n="s01-p1">Enlightenment is one of the most ancient and persistently sought states of human existence — and yet, ironically, one of the least understood. The word itself, in English, derives from the Latin <em>illuminatio</em>, connoting the breaking of darkness with light. In spiritual terms, it refers not to accumulating more knowledge, but to a fundamental shift in the very nature of one's experience of existence.</p>
+    <p class="body-text" data-i18n="s01-p2">At its core, enlightenment across all traditions describes a state in which the ordinary sense of being a small, separate, bounded self dissolves — and what remains is something far more vast, clear, and peaceful. It is not a new idea added on top of ordinary consciousness; it is the falling away of the distortions, compulsions, and identifications that cloud ordinary consciousness.</p>
+    <div class="callout-teal" data-i18n="s01-q1">"The most difficult thing about enlightenment is that it is too simple." — Sadhguru</div>
+    <p class="body-text" data-i18n="s01-p3">The paradox is real: what seekers journey thousands of miles and spend decades pursuing is, according to nearly every tradition and teacher, already present — obscured not by absence, but by the noise of what has been added on top of it.</p>
+  </div>
+  <hr class="divider">
+
+  <!-- §02 -->
+  <div id="sec-traditions" class="section">
+    <h2><span class="sec-num">02</span> <span data-i18n="s02-h2">Enlightenment Across Traditions</span></h2>
+    <p class="body-text" data-i18n="s02-p1">The concept of enlightenment appears in virtually every major spiritual tradition on earth, though it goes by different names and is understood through different frameworks.</p>
+    <div class="tag-row">
+      <span class="tag active" data-i18n="tag-hindu">Hinduism / Vedanta</span>
+      <span class="tag active" data-i18n="tag-buddhism">Buddhism</span>
+      <span class="tag active" data-i18n="tag-taoism">Taoism</span>
+      <span class="tag active" data-i18n="tag-sufism">Sufism</span>
+      <span class="tag active" data-i18n="tag-christian">Christian Mysticism</span>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label" data-i18n="c01-label">Hinduism / Vedanta</div>
+        <div class="card-title" data-i18n="c01-title">Moksha / Mukti</div>
+        <div class="card-text" data-i18n="c01-text">Liberation from the cycle of birth and death (samsara). The realization that the individual self (Atman) is identical to universal consciousness (Brahman). The dissolution of ignorance (avidya) is the path. The Upanishads describe it as "Tat Tvam Asi" — Thou art That.</div>
+      </div>
+      <div class="card">
+        <div class="card-label" data-i18n="c02-label">Buddhism</div>
+        <div class="card-title" data-i18n="c02-title">Nirvana / Bodhi</div>
+        <div class="card-text" data-i18n="c02-text">The extinguishing of craving, aversion, and delusion. The Buddha's awakening under the Bodhi tree is the archetype. In Zen, it is called <em>satori</em> — a sudden flash of insight into the true nature of reality, beyond conceptual thought. The self is seen as fundamentally empty (anatta).</div>
+      </div>
+      <div class="card">
+        <div class="card-label" data-i18n="c03-label">Taoism</div>
+        <div class="card-title" data-i18n="c03-title">Union with the Tao</div>
+        <div class="card-text" data-i18n="c03-text">Flowing in harmony with the natural order. The Sage (Zhenren) acts without effort (wu wei), has no personal agenda, and is indistinguishable from the Tao itself. There is no drama of "becoming enlightened" — just a returning to what was never lost.</div>
+      </div>
+      <div class="card">
+        <div class="card-label" data-i18n="c04-label">Sufism (Islam)</div>
+        <div class="card-title" data-i18n="c04-title">Fana — Annihilation in God</div>
+        <div class="card-text" data-i18n="c04-text">The Sufi concept of <em>fana</em> describes the complete dissolution of the individual ego in the ocean of Divine reality. What remains is <em>baqa</em> — subsistence in God. Rumi's entire poetry is an extended metaphor for this longing, dissolution, and return to the source.</div>
+      </div>
+      <div class="card">
+        <div class="card-label" data-i18n="c05-label">Christian Mysticism</div>
+        <div class="card-title" data-i18n="c05-title">Union with God / Theosis</div>
+        <div class="card-text" data-i18n="c05-text">Mystics like Meister Eckhart, St. John of the Cross, and Teresa of Ávila describe the "unitive way" — total merging with the Divine. Eckhart wrote of "breaking through" even the concept of God to arrive at the "Godhead" — pure, imageless ground of being.</div>
+      </div>
+      <div class="card">
+        <div class="card-label" data-i18n="c06-label">Yogic Science</div>
+        <div class="card-title" data-i18n="c06-title">Samadhi / Mukti</div>
+        <div class="card-text" data-i18n="c06-text">In yoga, <em>samadhi</em> (from <em>sama</em> = equanimity + <em>dhi</em> = intellect) describes a state of total absorption where the boundary between observer and observed dissolves. It is not unconsciousness — it is hyper-consciousness without the distortion of personal identity.</div>
+      </div>
+    </div>
+    <p class="body-text" data-i18n="s02-p2">Despite surface differences in language and culture, what is remarkably consistent across all traditions is the essential description: the dissolution of the personal ego-self, an experience of boundlessness, and a quality of natural peace and clarity that does not depend on outer circumstances.</p>
+  </div>
+  <hr class="divider">
+
+  <!-- §03 -->
+  <div id="sec-sadhguru-definition" class="section">
+    <h2><span class="sec-num">03</span> <span data-i18n="s03-h2">Sadhguru's Definition of Enlightenment</span></h2>
+    <p class="body-text" data-i18n="s03-p1">Sadhguru Jaggi Vasudev — yogi, mystic, and founder of the Isha Foundation — offers one of the most distinctive, grounded, and demystified frameworks for understanding enlightenment in contemporary spiritual discourse. His approach strips away supernatural mythology and grounds the concept in the mechanics of human consciousness.</p>
+    <div class="callout" data-i18n="s03-q1">"Enlightenment is not an achievement, but a homecoming. If you stop your distortions and come back to your original nature, that is enlightenment."</div>
+    <h3 data-i18n="s03-h3a">A Return to Original Nature</h3>
+    <p class="body-text" data-i18n="s03-p2">In Sadhguru's framework, every human being was born with a natural state of innocence, blissfulness, and clarity. Children are naturally joyful and present before the world begins to condition and "corrupt" that original quality. By around age 5 or 6, many children are already losing this innocent openness. By adolescence, it is often deeply buried. Enlightenment is the stripping away of what has been layered on top — the compulsive identifications, the reactive patterns, the unconscious misidentification with things we are not.</p>
+    <h3 data-i18n="s03-h3b">The Twice-Born: Dwija</h3>
+    <p class="body-text" data-i18n="s03-p3">Sadhguru draws on the ancient Indian concept of the <em>Dwija</em> — the "twice-born." The first birth is physical, unconscious, given to us by nature. In that birth, we arrive blissful and innocent, but that state is easily disturbed because it is not consciously held. The second birth — enlightenment — is a conscious re-emergence into that same blissfulness. Because it is conscious this time, it cannot be taken away by external events or other people's behavior.</p>
+    <div class="callout-violet" data-i18n="s03-q2">"What you call enlightenment means a conscious self-annihilation... if you destroy everything that you called 'myself,' then you are born once again. This kind of birth happens 100% consciously."</div>
+    <h3 data-i18n="s03-h3c">Clarity Replacing Confusion</h3>
+    <p class="body-text" data-i18n="s03-p4">In a characteristically simple analogy, Sadhguru compares enlightenment to sunrise. In darkness, we stumble and are confused. When the sun rises, nothing in the landscape has changed — the same world is there. But now we see it clearly. Enlightenment is exactly this: not the addition of something mystical, but clarity breaking through where confusion ruled.</p>
+    <h3 data-i18n="s03-h3d">Beyond Memory, Into Intelligence</h3>
+    <p class="body-text" data-i18n="s03-p5">Sadhguru describes enlightenment in cognitive terms: the confusion of memory with intelligence. Our education system trains people to store and retrieve information — confusing this accumulation of memory for intelligence. An enlightened being looks at whatever is placed before them and sees it freshly — pure intelligence operating without the lens of accumulated prejudice and memory.</p>
+    <h3 data-i18n="s03-h3e">A Benchmark for the Skeptical</h3>
+    <p class="body-text" data-i18n="s03-p6">For those who resist grandiose spiritual definitions, Sadhguru offers a practical benchmark: if everything in your life is going wrong — family, profession, health — and you remain inwardly wonderful anyway, then for all practical purposes, you are enlightened. It is not a state that depends on favorable external conditions. It is an unconditional inner quality.</p>
+    <div class="callout" data-i18n="s03-q3">"When everything is going dead wrong with your life — if you are still wonderful — for now, let us say you are enlightened, if you must set a benchmark."</div>
+  </div>
+  <hr class="divider">
+
+  <!-- §04 -->
+  <div id="sec-experience" class="section">
+    <h2><span class="sec-num">04</span> <span data-i18n="s04-h2">Sadhguru's Personal Experience of Enlightenment</span></h2>
+    <p class="body-text" data-i18n="s04-p1">Unlike many spiritual teachers who speak purely in abstract terms, Sadhguru has spoken openly and in vivid detail about the specific event that initiated his own enlightenment — a spontaneous awakening on Chamundi Hill in Mysore, India, in 1982. He was 25 years old at the time.</p>
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-dot"></div><div><div class="tl-title" data-i18n="tl1-title">The Ordinary Afternoon</div><div class="tl-text" data-i18n="tl1-text">One afternoon, Sadhguru rode his motorcycle up Chamundi Hill — a place he had visited many times before. He sat on a large rock, eyes open, in his usual state of mind. He was a successful young man, happy by ordinary standards, with no particular spiritual crisis driving the moment.</div></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div><div class="tl-title" data-i18n="tl2-title">The Dissolution of Self</div><div class="tl-text" data-i18n="tl2-text">"After a few minutes, I didn't know where I was. Till that moment, I always thought this is me and that is someone else. But for the first time I did not know what is me and what is not me. What was me was spread all over the place." He remained fully alert, eyes open — yet the boundary between self and other had evaporated entirely.</div></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div><div class="tl-title" data-i18n="tl3-title">Time Dissolved — 4.5 Hours Passed</div><div class="tl-text" data-i18n="tl3-text">He thought the experience lasted 5 to 10 minutes. When he came back, it was 7:30 in the evening — four and a half hours had passed since 3:00 pm. For the first time in his adult life, tears were flowing uncontrollably. His shirt was completely wet.</div></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div><div class="tl-title" data-i18n="tl4-title">Indescribable Ecstasy</div><div class="tl-text" data-i18n="tl4-text">"I was bursting with another kind of ecstasy which was indescribable. Every cell in my body was just bursting with ecstasy." His skeptical mind offered only: "Maybe you are going off your rocker." But he didn't care — "this was the most beautiful thing that I had ever touched."</div></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div><div class="tl-title" data-i18n="tl5-title">It Kept Returning</div><div class="tl-text" data-i18n="tl5-text">The experience was not a one-time event. It returned — once while sitting at his family dinner table, where he thought only 2 minutes had passed but 7 hours had gone by. Once it lasted for 13 continuous days. Within six weeks, it became a permanent living reality.</div></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div><div class="tl-title" data-i18n="tl6-title">Physical Transformation</div><div class="tl-text" data-i18n="tl6-text">"Everything about me changed in those six weeks. My voice changed, the shape of my eyes changed. If you see photos of me during that time, you can clearly see something changed dramatically in the body." The shift was not merely psychological — it was physiological and energetic.</div></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div><div class="tl-title" data-i18n="tl7-title">The Universal Recognition</div><div class="tl-text" data-i18n="tl7-text">"All I knew was the blissfulness bursting within me; and I knew it could happen in every human being. Every human being has the same inner ingredient." This recognition eventually became the foundation of the Isha Foundation's mission.</div></div></div>
+    </div>
+  </div>
+  <hr class="divider">
+
+  <!-- §05 -->
+  <div id="sec-looks-like" class="section">
+    <h2><span class="sec-num">05</span> <span data-i18n="s05-h2">What Enlightenment Looks Like</span></h2>
+    <p class="body-text" data-i18n="s05-p1">One of the most common questions is: how would you recognize an enlightened person? Sadhguru addresses this with characteristic humor and depth — pointing out both what enlightenment is not, and what it genuinely manifests as.</p>
+    <h3 data-i18n="s05-h3a">What It Does NOT Look Like</h3>
+    <div class="risk-grid">
+      <div class="risk-card"><div class="risk-title" data-i18n="r01-title">No Special Body Marks</div><div class="risk-text" data-i18n="r01-text">People have believed that enlightenment produces visible body signs. Sadhguru dismisses this directly: "You just know how to burn yourself. You can brand yourself with whatever marks you want." An enlightened being is precisely an "unblemished life — no branding."</div></div>
+      <div class="risk-card"><div class="risk-title" data-i18n="r02-title">No Permanent Trance State</div><div class="risk-text" data-i18n="r02-text">The romantic image of a sage floating blissfully above earthly reality, unable to function, is not what yogic tradition describes. True samadhi is a state of heightened clarity — not a fog of bliss that renders one useless in the world.</div></div>
+      <div class="risk-card"><div class="risk-title" data-i18n="r03-title">Not Dependent on Conditions</div><div class="risk-text" data-i18n="r03-text">Most ordinary people are "wonderful" when life cooperates — when people behave as expected, when things go well. The enlightened person's inner quality does not fluctuate with external conditions. This is the defining distinction.</div></div>
+    </div>
+    <h3 data-i18n="s05-h3b">What It Does Look Like</h3>
+    <div class="tips">
+      <div class="tip"><div class="tip-label" data-i18n="t01-label">Unconditional Wellbeing</div><div class="tip-text" data-i18n="t01-text">The most fundamental marker: joy, peace, and inner quality are not dependent on what happens outside. Family problems, professional failures, physical difficulties — none of these disturb the fundamental inner quality. This is not stoic suppression; it is a genuinely different relationship to experience itself.</div></div>
+      <div class="tip"><div class="tip-label" data-i18n="t02-label">Pure Intelligence</div><div class="tip-text" data-i18n="t02-text">The enlightened being perceives each situation freshly, without the filter of accumulated prejudice, fear, or desire. Pure intelligence — not stored reactive patterns — meets whatever arises. "Whatever you bring in front of him, he'll look at it and say this is what it is. Simply because he doesn't mix up memory and intelligence, that's all."</div></div>
+      <div class="tip"><div class="tip-label" data-i18n="t03-label">A Different Presence</div><div class="tip-text" data-i18n="t03-text">Even without knowing the word "enlightenment," people instinctively recognize that some individuals carry a fundamentally different quality of being. "From one person to another, one person seems to be a little better off, simply the way they are. Not because of their money, wealth, or qualifications. Simply the way they sit and stand."</div></div>
+      <div class="tip"><div class="tip-label" data-i18n="t04-label">Clarity — Like Sunrise</div><div class="tip-text" data-i18n="t04-text">Enlightenment is not a new object added to the landscape — it is the quality of seeing the existing landscape with complete clarity. In darkness, you stumble. When the sun rises, confidence appears — you know where to go, where not to go. Enlightenment is this clarity applied to the totality of life.</div></div>
+      <div class="tip"><div class="tip-label" data-i18n="t05-label">No Sense of Separation</div><div class="tip-text" data-i18n="t05-text">The central experiential hallmark, consistent across all descriptions: the hard boundary between "me" and "everything else" dissolves. Not conceptually — experientially. You do not conclude that you are connected to everything; you directly experience it.</div></div>
+      <div class="tip"><div class="tip-label" data-i18n="t06-label">Unblemished — No Agenda</div><div class="tip-text" data-i18n="t06-text">An enlightened person carries no hidden agendas, no compulsive needs, no psychological wounds driving their behavior. They are "unblemished" — not because life has never challenged them, but because nothing has left a lasting compulsive scar.</div></div>
+    </div>
+  </div>
+  <hr class="divider">
+
+  <!-- §06 -->
+  <div id="sec-four-paths" class="section">
+    <h2><span class="sec-num">06</span> <span data-i18n="s06-h2">The Four Paths — Yoga as a Science of Transformation</span></h2>
+    <p class="body-text" data-i18n="s06-p1">Sadhguru emphasizes that yogic science does not offer a single one-size-fits-all path to enlightenment. Instead, it identifies four fundamental dimensions of human experience — body, mind, emotion, and energy — and offers a corresponding path through each. These are the four classical yogas.</p>
+    <div class="callout" data-i18n="s06-q1">"These are the only four realities in your life: body, mind, emotion, and energy. Whatever you wish to do with yourself, it must be on these four levels." — Sadhguru</div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label" data-i18n="p01-label">Path 01</div>
+        <div class="card-title" data-i18n="p01-title">Karma Yoga</div>
+        <div class="card-text" data-i18n="p01-text"><strong>Through the body and action.</strong> The path of selfless action performed without attachment to outcomes. When action is done with total presence and without the "I am the doer" identification, it becomes a vehicle for dissolution of ego. This is the path taught in the Bhagavad Gita by Krishna to Arjuna.</div>
+      </div>
+      <div class="card">
+        <div class="card-label" data-i18n="p02-label">Path 02</div>
+        <div class="card-title" data-i18n="p02-title">Gnana Yoga</div>
+        <div class="card-text" data-i18n="p02-text"><strong>Through intelligence and inquiry.</strong> The path of discriminating wisdom — relentlessly investigating what is real and what is not, who "I" truly am beneath all layers of identity. The path of Ramana Maharshi's "Who Am I?" inquiry. Razor-sharp intellect applied to the fundamental question of existence.</div>
+      </div>
+      <div class="card">
+        <div class="card-label" data-i18n="p03-label">Path 03</div>
+        <div class="card-title" data-i18n="p03-title">Bhakti Yoga</div>
+        <div class="card-text" data-i18n="p03-text"><strong>Through emotion and devotion.</strong> The surrender of the personal self into something larger — God, the Guru, the universe — through love. When emotion is total and directed beyond personal desire, it becomes a vehicle for dissolution. The devotee's love is so complete that the lover and the beloved merge.</div>
+      </div>
+      <div class="card">
+        <div class="card-label" data-i18n="p04-label">Path 04</div>
+        <div class="card-title" data-i18n="p04-title">Kriya Yoga</div>
+        <div class="card-text" data-i18n="p04-text"><strong>Through energy and inner action.</strong> Working directly with the subtle energy (prana) of the system through specific internal techniques — breath, sound, focus — to reorganize the energetic architecture of the being. Sadhguru describes kriya as "internal action" that dismantles karmic residue from within. Traditionally requires a live teacher.</div>
+      </div>
+    </div>
+    <p class="body-text" data-i18n="s06-p2">No person is purely one type. Everyone is a unique combination of body, mind, emotion, and energy. Isha Yoga, as Sadhguru describes it, is offered as a synthesis of all four dimensions — a blend mixed according to what each individual most needs. This is why the tradition stresses the importance of a living teacher: to mix the right combination for each unique human system.</p>
+    <div class="callout-teal" data-i18n="s06-q2">"With the path of kriya you are not only seeking realization, you also want to know the mechanics of life-making." — Sadhguru</div>
+  </div>
+  <hr class="divider">
+
+  <!-- §07 -->
+  <div id="sec-how-to" class="section">
+    <h2><span class="sec-num">07</span> <span data-i18n="s07-h2">How to Approach Enlightenment — Sadhguru's Practical Guidance</span></h2>
+    <p class="body-text" data-i18n="s07-p1">Perhaps the most counterintuitive aspect of Sadhguru's teaching on enlightenment is his first and most emphatic instruction: do not pursue enlightenment. At least, not the way you pursue a goal.</p>
+    <h3 data-i18n="s07-h3a">Stop Chasing Your Own Tail</h3>
+    <p class="body-text" data-i18n="s07-p2">Sadhguru uses the image of a dog chasing its own tail. If you pursue enlightenment as a goal, you are chasing your own idea of it — and your idea can only be built from what you already know. "You cannot have an idea about something that you have no access to." The idea of enlightenment you are chasing is, by definition, not enlightenment.</p>
+    <div class="callout" data-i18n="s07-q1">"Don't pursue enlightenment. You cannot pursue enlightenment. How can you pursue something that you do not know? Just keep walking. After all, the planet is round. If you keep walking steadily, you will inevitably get somewhere." — Sadhguru</div>
+    <h3 data-i18n="s07-h3b">Become Unconditionally Wonderful</h3>
+    <p class="body-text" data-i18n="s07-p3">Sadhguru offers a more workable instruction: focus on becoming an absolutely, unconditionally wonderful human being. Don't worry about enlightenment — it is too abstract. Instead, improve relentlessly. Become more joyful, more aware, more compassionate — not when everything goes well, but especially when everything is going wrong.</p>
+    <div class="tips">
+      <div class="tip"><div class="tip-label" data-i18n="g01-label">Turn Inward</div><div class="tip-text" data-i18n="g01-text">Human experience is created from within. The fundamental error is looking outward — to possessions, relationships, status — for the wellbeing that can only come from within. The entire spiritual process is a turning inward: from being outward-facing to becoming inward-aware.</div></div>
+      <div class="tip"><div class="tip-label" data-i18n="g02-label">Stop False Identifications</div><div class="tip-text" data-i18n="g02-text">A key teaching: suffering arises when we identify with what we are not. "When one is identified with things they are not — material possessions, family, education — a quiet mind becomes an impossibility." Begin examining: what are you identifying with? What would remain if all of that were stripped away?</div></div>
+      <div class="tip"><div class="tip-label" data-i18n="g03-label">Cultivate Longing</div><div class="tip-text" data-i18n="g03-text">Enlightenment requires a genuine longing — not as an ego-project, but as a fundamental need. This typically arises only when a person has lived enough ordinary life to see its limitations. "When you have lived enough and you know that living better is not going to get you anywhere, then you want to go beyond life." This cannot be forced; it must ripen.</div></div>
+      <div class="tip"><div class="tip-label" data-i18n="g04-label">Find the Right Practice</div><div class="tip-text" data-i18n="g04-text">Sadhguru's Isha programs offer structured practices — particularly Shambhavi Mahamudra Kriya, a 21-minute daily practice — as vehicles for inner transformation. He spent nearly 18–20 years preparing this practice to be safe and accessible for large groups. Committed daily sadhana is described as essential.</div></div>
+      <div class="tip"><div class="tip-label" data-i18n="g05-label">Sacred Spaces &amp; Grace</div><div class="tip-text" data-i18n="g05-text">Sadhguru describes consecrated spaces — like the Dhyanalinga at the Isha Yoga Center — as living tools for enlightenment. He also acknowledges the role of the Guru: "What cannot be learned in ten lifetimes was transmitted to me in one moment." Grace is real in the yogic framework — and the Guru-disciple transmission is one of the most powerful vehicles.</div></div>
+      <div class="tip"><div class="tip-label" data-i18n="g06-label">Be a Seeker, Not a Believer</div><div class="tip-text" data-i18n="g06-text">"Those who follow a religion are called believers, and those on a spiritual path are called seekers. Belief comes from an assumption about something you do not know. Seeking comes from the sincerity of seeing 'I do not know,' so you want to know." Sadhguru consistently urges people to approach existence with genuine openness — no conclusions.</div></div>
+    </div>
+    <h3 data-i18n="s07-h3c">Consistency Over Intensity</h3>
+    <p class="body-text" data-i18n="s07-p4">Sadhguru explains that the spiritual path only seems arduous to people because they are "off and on." It is not the path that is difficult; it is the inconsistency of the traveler. Steady, unwavering movement in one direction — even if slow — will inevitably arrive somewhere profound. Sporadic bursts of spiritual enthusiasm followed by long periods of unconsciousness do not add up.</p>
+  </div>
+  <hr class="divider">
+
+  <!-- §08 -->
+  <div id="sec-karma" class="section">
+    <h2><span class="sec-num">08</span> <span data-i18n="s08-h2">Karma, Kriya &amp; Liberation</span></h2>
+    <p class="body-text" data-i18n="s08-p1">Central to Sadhguru's framework for enlightenment is the understanding of karma — not as cosmic punishment, but as the accumulated memory and residue of action that shapes and ultimately limits our experience of life.</p>
+    <h3 data-i18n="s08-h3a">What Karma Actually Is</h3>
+    <p class="body-text" data-i18n="s08-p2">Sadhguru defines karma not as moral accounting (good deeds vs. bad deeds), but as the memory of life embedded in the system. It operates on multiple levels simultaneously: physical, mental, emotional, and energetic. Karma is not only your own actions — it includes the karmic patterns of your ancestors operating within you. It is the "cement" that binds you to your body and to your particular way of experiencing reality.</p>
+    <div class="callout" data-i18n="s08-q1">"As long as you are established in 'This is me, that is you,' karma is a well-established reality — like a solid steel structure. However, if you confuse yourself, 'Which is me and which is not me?' suddenly karma loses its foundation and just crumbles."</div>
+    <h3 data-i18n="s08-h3b">Karma vs. Kriya</h3>
+    <p class="body-text" data-i18n="s08-p3">Sadhguru draws a crucial distinction: karma is action that leaves a residual imprint, binding the system. Kriya is a specific type of inner action, operating at the level of energy, that dismantles karmic residue rather than creating new layers. External actions bind; internal energy actions release. This is why kriya practices are central to the yogic path toward liberation.</p>
+    <h3 data-i18n="s08-h3c">The Danger of Total Dissolution</h3>
+    <p class="body-text" data-i18n="s08-p4">In a striking teaching, Sadhguru notes that karma is not only bondage — it is also protection. It is the mechanism that maintains the connection between consciousness and the physical body. "If all karma is dissolved, you will not be able to hold on to your body — you will drop it." This is why the moment of enlightenment and the moment of leaving the body are often identical for beings who do not know the mechanics. Only those on the kriya path can retain the body after total dissolution — what is known as <em>Mahasamadhi</em>: the conscious, chosen exit from the body at the moment of ultimate liberation.</p>
+    <h3 data-i18n="s08-h3d">Practices for Dissolving Karma</h3>
+    <p class="body-text" data-i18n="s08-p5">Sadhguru identifies several approaches to accelerating karmic dissolution. Conscious breathwork (pranayama and kriyas) strengthens the etheric body — the subtle dimension that bridges the physical and non-physical. Sacred spaces that have been consecrated hold specific transformative energies that accelerate the process. And ultimately, the complete release of attachment to the concept of "self" dissolves the very foundation upon which karma stands.</p>
+  </div>
+  <hr class="divider">
+
+  <!-- §09 -->
+  <div id="sec-misconceptions" class="section">
+    <h2><span class="sec-num">09</span> <span data-i18n="s09-h2">Common Misconceptions About Enlightenment</span></h2>
+    <p class="body-text" data-i18n="s09-p1">Given the mystique surrounding enlightenment, a number of deeply persistent misconceptions have accumulated — some cultural, some psychological. Sadhguru addresses several of these directly.</p>
+    <div class="risk-grid">
+      <div class="risk-card"><div class="risk-title" data-i18n="m01-title">Misconception 1: It Is an Achievement</div><div class="risk-text" data-i18n="m01-text">Framing enlightenment as something to be achieved — like a degree or a summit — leads to ego-driven spiritual pursuit. The ego chasing enlightenment is the very thing that prevents it. Enlightenment is not gaining something new, but dropping something false. It is a subtraction, not an addition.</div></div>
+      <div class="risk-card"><div class="risk-title" data-i18n="m02-title">Misconception 2: Reserved for the Few</div><div class="risk-text" data-i18n="m02-text">Sadhguru is explicit: "Every human being has the same inner ingredient. This is possible for every human being." Enlightenment is not a genetic lottery or a divine election. It is the natural destination of any human being who removes the obstacles to it. The capacity is universal.</div></div>
+      <div class="risk-card"><div class="risk-title" data-i18n="m03-title">Misconception 3: Requires World Renunciation</div><div class="risk-text" data-i18n="m03-text">The image of the enlightened person as a cave-dwelling hermit is challenged by the example of Sadhguru himself — a man who runs a global foundation, speaks at the UN and Davos, drives motorcycles, and plays golf. Enlightenment is an inner state, not an outer lifestyle.</div></div>
+      <div class="risk-card"><div class="risk-title" data-i18n="m04-title">Misconception 4: Just Peace and Happiness</div><div class="risk-text" data-i18n="m04-text">Sadhguru makes a subtle distinction. Peace and happiness are improvements in the quality of ordinary experience — wonderful, but still within the same dimension. Enlightenment is a shift in dimension altogether: not toward a better version of ordinary experience, but beyond the structure of ordinary experience itself.</div></div>
+      <div class="risk-card"><div class="risk-title" data-i18n="m05-title">Misconception 5: A Fixed Benchmark</div><div class="risk-text" data-i18n="m05-text">"There is no benchmark out there — 'This is enlightenment!'" Sadhguru resists turning enlightenment into a fixed, measurable, certifiable state. It is a living, dynamic reality — not a credential. The danger of having a fixed idea of enlightenment is that you will pursue and perhaps achieve your idea, which is not enlightenment.</div></div>
+      <div class="risk-card"><div class="risk-title" data-i18n="m06-title">Misconception 6: You Can Think Your Way There</div><div class="risk-text" data-i18n="m06-text">Intellectual understanding of enlightenment is not enlightenment. "Enlightenment is in a way we cannot think. You cannot think it out, you can only walk into it." The mind can only recombine what it already knows. Enlightenment lies beyond what the mind can construct. It requires an experiential shift, not a conceptual refinement.</div></div>
+    </div>
+    <div class="callout-teal" data-i18n="s09-q1">"Whether you climb Mount Everest or not, whether you become the richest man on this planet or not — your experience of life on this planet should be pleasant. You must live blissfully and go. Everyone deserves it and everyone is capable of it." — Sadhguru</div>
+  </div>
+  <hr class="divider">
+
+  <!-- §10 Change History -->
+  <div id="sec-change-history" class="section">
+    <h2><span class="sec-num">10</span> <span data-i18n="s10-h2">Change History</span></h2>
+    <table class="change-table">
+      <thead>
+        <tr>
+          <th data-i18n="ch-ver">Version</th>
+          <th data-i18n="ch-author">Author</th>
+          <th data-i18n="ch-changes">Changes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>v2026.5.16</td>
+          <td>Claude</td>
+          <td data-i18n="ch-today">Added ENG/中文 language toggle with full bilingual translation; fixed equal-width card and risk-card grids; repaired Change History table layout and HTML structure; removed body-text width constraint for consistent layout; improved tip text legibility in dark mode.</td>
+        </tr>
+        <tr>
+          <td>v2026.5.15</td>
+          <td>Claude</td>
+          <td data-i18n="ch-yesterday">Initial version. Deep research document covering the nature of enlightenment across world traditions and through Sadhguru's specific teachings — including his personal awakening experience, what enlightenment looks like, the four yoga paths, karma and liberation, practical guidance, and common misconceptions.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="footer-note" data-i18n="footer">— compiled from Sadhguru's public teachings, Isha Foundation archives, and cross-traditional scholarship —</p>
+
+</main>
+
+<script>
+// ─────────────────────────────────────────────
+//  TRANSLATIONS
+// ─────────────────────────────────────────────
+const T = {
+  en: {
+    "page-title":    "Enlightenment — A Deep Research",
+    "topbar-name":   "Enlightenment",
+    "topbar-subtitle": "Deep Research",
+    "nav-label":     "Sections",
+    "nav-01": "Overview",
+    "nav-02": "Across Traditions",
+    "nav-03": "Sadhguru's View",
+    "nav-04": "His Experience",
+    "nav-05": "What It Looks Like",
+    "nav-06": "Four Paths",
+    "nav-07": "How to Approach",
+    "nav-08": "Karma &amp; Liberation",
+    "nav-09": "Misconceptions",
+    "nav-10": "Change History",
+    "page-kicker":   "Spiritual Research · Sadhguru · Yogic Science",
+    "page-h1":       "The Nature of Enlightenment",
+    "page-subtitle": "What it is · What it looks like · How to approach it — through the lens of Sadhguru &amp; world traditions",
+    "footer": "— compiled from Sadhguru's public teachings, Isha Foundation archives, and cross-traditional scholarship —",
+
+    "s01-h2": "Overview: What Is Enlightenment?",
+    "s01-p1": "Enlightenment is one of the most ancient and persistently sought states of human existence — and yet, ironically, one of the least understood. The word itself, in English, derives from the Latin <em>illuminatio</em>, connoting the breaking of darkness with light. In spiritual terms, it refers not to accumulating more knowledge, but to a fundamental shift in the very nature of one's experience of existence.",
+    "s01-p2": "At its core, enlightenment across all traditions describes a state in which the ordinary sense of being a small, separate, bounded self dissolves — and what remains is something far more vast, clear, and peaceful. It is not a new idea added on top of ordinary consciousness; it is the falling away of the distortions, compulsions, and identifications that cloud ordinary consciousness.",
+    "s01-q1": "\"The most difficult thing about enlightenment is that it is too simple.\" — Sadhguru",
+    "s01-p3": "The paradox is real: what seekers journey thousands of miles and spend decades pursuing is, according to nearly every tradition and teacher, already present — obscured not by absence, but by the noise of what has been added on top of it.",
+
+    "s02-h2": "Enlightenment Across Traditions",
+    "s02-p1": "The concept of enlightenment appears in virtually every major spiritual tradition on earth, though it goes by different names and is understood through different frameworks.",
+    "tag-hindu": "Hinduism / Vedanta", "tag-buddhism": "Buddhism", "tag-taoism": "Taoism", "tag-sufism": "Sufism", "tag-christian": "Christian Mysticism",
+    "c01-label": "Hinduism / Vedanta", "c01-title": "Moksha / Mukti", "c01-text": "Liberation from the cycle of birth and death (samsara). The realization that the individual self (Atman) is identical to universal consciousness (Brahman). The dissolution of ignorance (avidya) is the path. The Upanishads describe it as \"Tat Tvam Asi\" — Thou art That.",
+    "c02-label": "Buddhism", "c02-title": "Nirvana / Bodhi", "c02-text": "The extinguishing of craving, aversion, and delusion. The Buddha's awakening under the Bodhi tree is the archetype. In Zen, it is called <em>satori</em> — a sudden flash of insight into the true nature of reality, beyond conceptual thought. The self is seen as fundamentally empty (anatta).",
+    "c03-label": "Taoism", "c03-title": "Union with the Tao", "c03-text": "Flowing in harmony with the natural order. The Sage (Zhenren) acts without effort (wu wei), has no personal agenda, and is indistinguishable from the Tao itself. There is no drama of \"becoming enlightened\" — just a returning to what was never lost.",
+    "c04-label": "Sufism (Islam)", "c04-title": "Fana — Annihilation in God", "c04-text": "The Sufi concept of <em>fana</em> describes the complete dissolution of the individual ego in the ocean of Divine reality. What remains is <em>baqa</em> — subsistence in God. Rumi's entire poetry is an extended metaphor for this longing, dissolution, and return to the source.",
+    "c05-label": "Christian Mysticism", "c05-title": "Union with God / Theosis", "c05-text": "Mystics like Meister Eckhart, St. John of the Cross, and Teresa of Ávila describe the \"unitive way\" — total merging with the Divine. Eckhart wrote of \"breaking through\" even the concept of God to arrive at the \"Godhead\" — pure, imageless ground of being.",
+    "c06-label": "Yogic Science", "c06-title": "Samadhi / Mukti", "c06-text": "In yoga, <em>samadhi</em> (from <em>sama</em> = equanimity + <em>dhi</em> = intellect) describes a state of total absorption where the boundary between observer and observed dissolves. It is not unconsciousness — it is hyper-consciousness without the distortion of personal identity.",
+    "s02-p2": "Despite surface differences in language and culture, what is remarkably consistent across all traditions is the essential description: the dissolution of the personal ego-self, an experience of boundlessness, and a quality of natural peace and clarity that does not depend on outer circumstances.",
+
+    "s03-h2": "Sadhguru's Definition of Enlightenment",
+    "s03-p1": "Sadhguru Jaggi Vasudev — yogi, mystic, and founder of the Isha Foundation — offers one of the most distinctive, grounded, and demystified frameworks for understanding enlightenment in contemporary spiritual discourse. His approach strips away supernatural mythology and grounds the concept in the mechanics of human consciousness.",
+    "s03-q1": "\"Enlightenment is not an achievement, but a homecoming. If you stop your distortions and come back to your original nature, that is enlightenment.\"",
+    "s03-h3a": "A Return to Original Nature",
+    "s03-p2": "In Sadhguru's framework, every human being was born with a natural state of innocence, blissfulness, and clarity. Children are naturally joyful and present before the world begins to condition and \"corrupt\" that original quality. By around age 5 or 6, many children are already losing this innocent openness. By adolescence, it is often deeply buried. Enlightenment is the stripping away of what has been layered on top — the compulsive identifications, the reactive patterns, the unconscious misidentification with things we are not.",
+    "s03-h3b": "The Twice-Born: Dwija",
+    "s03-p3": "Sadhguru draws on the ancient Indian concept of the <em>Dwija</em> — the \"twice-born.\" The first birth is physical, unconscious, given to us by nature. In that birth, we arrive blissful and innocent, but that state is easily disturbed because it is not consciously held. The second birth — enlightenment — is a conscious re-emergence into that same blissfulness. Because it is conscious this time, it cannot be taken away by external events or other people's behavior.",
+    "s03-q2": "\"What you call enlightenment means a conscious self-annihilation... if you destroy everything that you called 'myself,' then you are born once again. This kind of birth happens 100% consciously.\"",
+    "s03-h3c": "Clarity Replacing Confusion",
+    "s03-p4": "In a characteristically simple analogy, Sadhguru compares enlightenment to sunrise. In darkness, we stumble and are confused. When the sun rises, nothing in the landscape has changed — the same world is there. But now we see it clearly. Enlightenment is exactly this: not the addition of something mystical, but clarity breaking through where confusion ruled.",
+    "s03-h3d": "Beyond Memory, Into Intelligence",
+    "s03-p5": "Sadhguru describes enlightenment in cognitive terms: the confusion of memory with intelligence. Our education system trains people to store and retrieve information — confusing this accumulation of memory for intelligence. An enlightened being looks at whatever is placed before them and sees it freshly — pure intelligence operating without the lens of accumulated prejudice and memory.",
+    "s03-h3e": "A Benchmark for the Skeptical",
+    "s03-p6": "For those who resist grandiose spiritual definitions, Sadhguru offers a practical benchmark: if everything in your life is going wrong — family, profession, health — and you remain inwardly wonderful anyway, then for all practical purposes, you are enlightened. It is not a state that depends on favorable external conditions. It is an unconditional inner quality.",
+    "s03-q3": "\"When everything is going dead wrong with your life — if you are still wonderful — for now, let us say you are enlightened, if you must set a benchmark.\"",
+
+    "s04-h2": "Sadhguru's Personal Experience of Enlightenment",
+    "s04-p1": "Unlike many spiritual teachers who speak purely in abstract terms, Sadhguru has spoken openly and in vivid detail about the specific event that initiated his own enlightenment — a spontaneous awakening on Chamundi Hill in Mysore, India, in 1982. He was 25 years old at the time.",
+    "tl1-title": "The Ordinary Afternoon", "tl1-text": "One afternoon, Sadhguru rode his motorcycle up Chamundi Hill — a place he had visited many times before. He sat on a large rock, eyes open, in his usual state of mind. He was a successful young man, happy by ordinary standards, with no particular spiritual crisis driving the moment.",
+    "tl2-title": "The Dissolution of Self", "tl2-text": "\"After a few minutes, I didn't know where I was. Till that moment, I always thought this is me and that is someone else. But for the first time I did not know what is me and what is not me. What was me was spread all over the place.\" He remained fully alert, eyes open — yet the boundary between self and other had evaporated entirely.",
+    "tl3-title": "Time Dissolved — 4.5 Hours Passed", "tl3-text": "He thought the experience lasted 5 to 10 minutes. When he came back, it was 7:30 in the evening — four and a half hours had passed since 3:00 pm. For the first time in his adult life, tears were flowing uncontrollably. His shirt was completely wet.",
+    "tl4-title": "Indescribable Ecstasy", "tl4-text": "\"I was bursting with another kind of ecstasy which was indescribable. Every cell in my body was just bursting with ecstasy.\" His skeptical mind offered only: \"Maybe you are going off your rocker.\" But he didn't care — \"this was the most beautiful thing that I had ever touched.\"",
+    "tl5-title": "It Kept Returning", "tl5-text": "The experience was not a one-time event. It returned — once while sitting at his family dinner table, where he thought only 2 minutes had passed but 7 hours had gone by. Once it lasted for 13 continuous days. Within six weeks, it became a permanent living reality.",
+    "tl6-title": "Physical Transformation", "tl6-text": "\"Everything about me changed in those six weeks. My voice changed, the shape of my eyes changed. If you see photos of me during that time, you can clearly see something changed dramatically in the body.\" The shift was not merely psychological — it was physiological and energetic.",
+    "tl7-title": "The Universal Recognition", "tl7-text": "\"All I knew was the blissfulness bursting within me; and I knew it could happen in every human being. Every human being has the same inner ingredient.\" This recognition eventually became the foundation of the Isha Foundation's mission.",
+
+    "s05-h2": "What Enlightenment Looks Like",
+    "s05-p1": "One of the most common questions is: how would you recognize an enlightened person? Sadhguru addresses this with characteristic humor and depth — pointing out both what enlightenment is not, and what it genuinely manifests as.",
+    "s05-h3a": "What It Does NOT Look Like",
+    "r01-title": "No Special Body Marks", "r01-text": "People have believed that enlightenment produces visible body signs. Sadhguru dismisses this directly: \"You just know how to burn yourself. You can brand yourself with whatever marks you want.\" An enlightened being is precisely an \"unblemished life — no branding.\"",
+    "r02-title": "No Permanent Trance State", "r02-text": "The romantic image of a sage floating blissfully above earthly reality, unable to function, is not what yogic tradition describes. True samadhi is a state of heightened clarity — not a fog of bliss that renders one useless in the world.",
+    "r03-title": "Not Dependent on Conditions", "r03-text": "Most ordinary people are \"wonderful\" when life cooperates — when people behave as expected, when things go well. The enlightened person's inner quality does not fluctuate with external conditions. This is the defining distinction.",
+    "s05-h3b": "What It Does Look Like",
+    "t01-label": "Unconditional Wellbeing", "t01-text": "The most fundamental marker: joy, peace, and inner quality are not dependent on what happens outside. Family problems, professional failures, physical difficulties — none of these disturb the fundamental inner quality. This is not stoic suppression; it is a genuinely different relationship to experience itself.",
+    "t02-label": "Pure Intelligence", "t02-text": "The enlightened being perceives each situation freshly, without the filter of accumulated prejudice, fear, or desire. Pure intelligence — not stored reactive patterns — meets whatever arises. \"Whatever you bring in front of him, he'll look at it and say this is what it is. Simply because he doesn't mix up memory and intelligence, that's all.\"",
+    "t03-label": "A Different Presence", "t03-text": "Even without knowing the word \"enlightenment,\" people instinctively recognize that some individuals carry a fundamentally different quality of being. \"From one person to another, one person seems to be a little better off, simply the way they are. Not because of their money, wealth, or qualifications. Simply the way they sit and stand.\"",
+    "t04-label": "Clarity — Like Sunrise", "t04-text": "Enlightenment is not a new object added to the landscape — it is the quality of seeing the existing landscape with complete clarity. In darkness, you stumble. When the sun rises, confidence appears — you know where to go, where not to go. Enlightenment is this clarity applied to the totality of life.",
+    "t05-label": "No Sense of Separation", "t05-text": "The central experiential hallmark, consistent across all descriptions: the hard boundary between \"me\" and \"everything else\" dissolves. Not conceptually — experientially. You do not conclude that you are connected to everything; you directly experience it.",
+    "t06-label": "Unblemished — No Agenda", "t06-text": "An enlightened person carries no hidden agendas, no compulsive needs, no psychological wounds driving their behavior. They are \"unblemished\" — not because life has never challenged them, but because nothing has left a lasting compulsive scar.",
+
+    "s06-h2": "The Four Paths — Yoga as a Science of Transformation",
+    "s06-p1": "Sadhguru emphasizes that yogic science does not offer a single one-size-fits-all path to enlightenment. Instead, it identifies four fundamental dimensions of human experience — body, mind, emotion, and energy — and offers a corresponding path through each. These are the four classical yogas.",
+    "s06-q1": "\"These are the only four realities in your life: body, mind, emotion, and energy. Whatever you wish to do with yourself, it must be on these four levels.\" — Sadhguru",
+    "p01-label": "Path 01", "p01-title": "Karma Yoga", "p01-text": "<strong>Through the body and action.</strong> The path of selfless action performed without attachment to outcomes. When action is done with total presence and without the \"I am the doer\" identification, it becomes a vehicle for dissolution of ego. This is the path taught in the Bhagavad Gita by Krishna to Arjuna.",
+    "p02-label": "Path 02", "p02-title": "Gnana Yoga", "p02-text": "<strong>Through intelligence and inquiry.</strong> The path of discriminating wisdom — relentlessly investigating what is real and what is not, who \"I\" truly am beneath all layers of identity. The path of Ramana Maharshi's \"Who Am I?\" inquiry. Razor-sharp intellect applied to the fundamental question of existence.",
+    "p03-label": "Path 03", "p03-title": "Bhakti Yoga", "p03-text": "<strong>Through emotion and devotion.</strong> The surrender of the personal self into something larger — God, the Guru, the universe — through love. When emotion is total and directed beyond personal desire, it becomes a vehicle for dissolution. The devotee's love is so complete that the lover and the beloved merge.",
+    "p04-label": "Path 04", "p04-title": "Kriya Yoga", "p04-text": "<strong>Through energy and inner action.</strong> Working directly with the subtle energy (prana) of the system through specific internal techniques — breath, sound, focus — to reorganize the energetic architecture of the being. Sadhguru describes kriya as \"internal action\" that dismantles karmic residue from within. Traditionally requires a live teacher.",
+    "s06-p2": "No person is purely one type. Everyone is a unique combination of body, mind, emotion, and energy. Isha Yoga, as Sadhguru describes it, is offered as a synthesis of all four dimensions — a blend mixed according to what each individual most needs. This is why the tradition stresses the importance of a living teacher: to mix the right combination for each unique human system.",
+    "s06-q2": "\"With the path of kriya you are not only seeking realization, you also want to know the mechanics of life-making.\" — Sadhguru",
+
+    "s07-h2": "How to Approach Enlightenment — Sadhguru's Practical Guidance",
+    "s07-p1": "Perhaps the most counterintuitive aspect of Sadhguru's teaching on enlightenment is his first and most emphatic instruction: do not pursue enlightenment. At least, not the way you pursue a goal.",
+    "s07-h3a": "Stop Chasing Your Own Tail",
+    "s07-p2": "Sadhguru uses the image of a dog chasing its own tail. If you pursue enlightenment as a goal, you are chasing your own idea of it — and your idea can only be built from what you already know. \"You cannot have an idea about something that you have no access to.\" The idea of enlightenment you are chasing is, by definition, not enlightenment.",
+    "s07-q1": "\"Don't pursue enlightenment. You cannot pursue enlightenment. How can you pursue something that you do not know? Just keep walking. After all, the planet is round. If you keep walking steadily, you will inevitably get somewhere.\" — Sadhguru",
+    "s07-h3b": "Become Unconditionally Wonderful",
+    "s07-p3": "Sadhguru offers a more workable instruction: focus on becoming an absolutely, unconditionally wonderful human being. Don't worry about enlightenment — it is too abstract. Instead, improve relentlessly. Become more joyful, more aware, more compassionate — not when everything goes well, but especially when everything is going wrong.",
+    "g01-label": "Turn Inward", "g01-text": "Human experience is created from within. The fundamental error is looking outward — to possessions, relationships, status — for the wellbeing that can only come from within. The entire spiritual process is a turning inward: from being outward-facing to becoming inward-aware.",
+    "g02-label": "Stop False Identifications", "g02-text": "A key teaching: suffering arises when we identify with what we are not. \"When one is identified with things they are not — material possessions, family, education — a quiet mind becomes an impossibility.\" Begin examining: what are you identifying with? What would remain if all of that were stripped away?",
+    "g03-label": "Cultivate Longing", "g03-text": "Enlightenment requires a genuine longing — not as an ego-project, but as a fundamental need. This typically arises only when a person has lived enough ordinary life to see its limitations. \"When you have lived enough and you know that living better is not going to get you anywhere, then you want to go beyond life.\" This cannot be forced; it must ripen.",
+    "g04-label": "Find the Right Practice", "g04-text": "Sadhguru's Isha programs offer structured practices — particularly Shambhavi Mahamudra Kriya, a 21-minute daily practice — as vehicles for inner transformation. He spent nearly 18–20 years preparing this practice to be safe and accessible for large groups. Committed daily sadhana is described as essential.",
+    "g05-label": "Sacred Spaces &amp; Grace", "g05-text": "Sadhguru describes consecrated spaces — like the Dhyanalinga at the Isha Yoga Center — as living tools for enlightenment. He also acknowledges the role of the Guru: \"What cannot be learned in ten lifetimes was transmitted to me in one moment.\" Grace is real in the yogic framework — and the Guru-disciple transmission is one of the most powerful vehicles.",
+    "g06-label": "Be a Seeker, Not a Believer", "g06-text": "\"Those who follow a religion are called believers, and those on a spiritual path are called seekers. Belief comes from an assumption about something you do not know. Seeking comes from the sincerity of seeing 'I do not know,' so you want to know.\" Sadhguru consistently urges people to approach existence with genuine openness — no conclusions.",
+    "s07-h3c": "Consistency Over Intensity",
+    "s07-p4": "Sadhguru explains that the spiritual path only seems arduous to people because they are \"off and on.\" It is not the path that is difficult; it is the inconsistency of the traveler. Steady, unwavering movement in one direction — even if slow — will inevitably arrive somewhere profound. Sporadic bursts of spiritual enthusiasm followed by long periods of unconsciousness do not add up.",
+
+    "s08-h2": "Karma, Kriya &amp; Liberation",
+    "s08-p1": "Central to Sadhguru's framework for enlightenment is the understanding of karma — not as cosmic punishment, but as the accumulated memory and residue of action that shapes and ultimately limits our experience of life.",
+    "s08-h3a": "What Karma Actually Is",
+    "s08-p2": "Sadhguru defines karma not as moral accounting (good deeds vs. bad deeds), but as the memory of life embedded in the system. It operates on multiple levels simultaneously: physical, mental, emotional, and energetic. Karma is not only your own actions — it includes the karmic patterns of your ancestors operating within you. It is the \"cement\" that binds you to your body and to your particular way of experiencing reality.",
+    "s08-q1": "\"As long as you are established in 'This is me, that is you,' karma is a well-established reality — like a solid steel structure. However, if you confuse yourself, 'Which is me and which is not me?' suddenly karma loses its foundation and just crumbles.\"",
+    "s08-h3b": "Karma vs. Kriya",
+    "s08-p3": "Sadhguru draws a crucial distinction: karma is action that leaves a residual imprint, binding the system. Kriya is a specific type of inner action, operating at the level of energy, that dismantles karmic residue rather than creating new layers. External actions bind; internal energy actions release. This is why kriya practices are central to the yogic path toward liberation.",
+    "s08-h3c": "The Danger of Total Dissolution",
+    "s08-p4": "In a striking teaching, Sadhguru notes that karma is not only bondage — it is also protection. It is the mechanism that maintains the connection between consciousness and the physical body. \"If all karma is dissolved, you will not be able to hold on to your body — you will drop it.\" This is why the moment of enlightenment and the moment of leaving the body are often identical for beings who do not know the mechanics. Only those on the kriya path can retain the body after total dissolution — what is known as <em>Mahasamadhi</em>: the conscious, chosen exit from the body at the moment of ultimate liberation.",
+    "s08-h3d": "Practices for Dissolving Karma",
+    "s08-p5": "Sadhguru identifies several approaches to accelerating karmic dissolution. Conscious breathwork (pranayama and kriyas) strengthens the etheric body — the subtle dimension that bridges the physical and non-physical. Sacred spaces that have been consecrated hold specific transformative energies that accelerate the process. And ultimately, the complete release of attachment to the concept of \"self\" dissolves the very foundation upon which karma stands.",
+
+    "s09-h2": "Common Misconceptions About Enlightenment",
+    "s09-p1": "Given the mystique surrounding enlightenment, a number of deeply persistent misconceptions have accumulated — some cultural, some psychological. Sadhguru addresses several of these directly.",
+    "m01-title": "Misconception 1: It Is an Achievement", "m01-text": "Framing enlightenment as something to be achieved — like a degree or a summit — leads to ego-driven spiritual pursuit. The ego chasing enlightenment is the very thing that prevents it. Enlightenment is not gaining something new, but dropping something false. It is a subtraction, not an addition.",
+    "m02-title": "Misconception 2: Reserved for the Few", "m02-text": "Sadhguru is explicit: \"Every human being has the same inner ingredient. This is possible for every human being.\" Enlightenment is not a genetic lottery or a divine election. It is the natural destination of any human being who removes the obstacles to it. The capacity is universal.",
+    "m03-title": "Misconception 3: Requires World Renunciation", "m03-text": "The image of the enlightened person as a cave-dwelling hermit is challenged by the example of Sadhguru himself — a man who runs a global foundation, speaks at the UN and Davos, drives motorcycles, and plays golf. Enlightenment is an inner state, not an outer lifestyle.",
+    "m04-title": "Misconception 4: Just Peace and Happiness", "m04-text": "Sadhguru makes a subtle distinction. Peace and happiness are improvements in the quality of ordinary experience — wonderful, but still within the same dimension. Enlightenment is a shift in dimension altogether: not toward a better version of ordinary experience, but beyond the structure of ordinary experience itself.",
+    "m05-title": "Misconception 5: A Fixed Benchmark", "m05-text": "\"There is no benchmark out there — 'This is enlightenment!'\" Sadhguru resists turning enlightenment into a fixed, measurable, certifiable state. It is a living, dynamic reality — not a credential. The danger of having a fixed idea of enlightenment is that you will pursue and perhaps achieve your idea, which is not enlightenment.",
+    "m06-title": "Misconception 6: You Can Think Your Way There", "m06-text": "Intellectual understanding of enlightenment is not enlightenment. \"Enlightenment is in a way we cannot think. You cannot think it out, you can only walk into it.\" The mind can only recombine what it already knows. Enlightenment lies beyond what the mind can construct. It requires an experiential shift, not a conceptual refinement.",
+    "s09-q1": "\"Whether you climb Mount Everest or not, whether you become the richest man on this planet or not — your experience of life on this planet should be pleasant. You must live blissfully and go. Everyone deserves it and everyone is capable of it.\" — Sadhguru",
+
+    "s10-h2": "Change History",
+    "ch-ver": "Version", "ch-author": "Author", "ch-changes": "Changes",
+    "ch-today": "Added ENG/中文 language toggle with full bilingual translation; fixed equal-width card and risk-card grids; repaired Change History table layout and HTML structure; removed body-text width constraint for consistent layout; improved tip text legibility in dark mode.",
+    "ch-yesterday": "Initial version. Deep research document covering the nature of enlightenment across world traditions and through Sadhguru's specific teachings — including his personal awakening experience, what enlightenment looks like, the four yoga paths, karma and liberation, practical guidance, and common misconceptions."
+  },
+
+  zh: {
+    "page-title":    "开悟的本质 — 深度研究",
+    "topbar-name":   "开悟",
+    "topbar-subtitle": "深度研究",
+    "nav-label":     "章节",
+    "nav-01": "概述",
+    "nav-02": "各传统观点",
+    "nav-03": "萨古鲁的观点",
+    "nav-04": "他的亲身体验",
+    "nav-05": "开悟的样貌",
+    "nav-06": "四条道路",
+    "nav-07": "如何趋近开悟",
+    "nav-08": "业力与解脱",
+    "nav-09": "常见误解",
+    "nav-10": "更改历史",
+    "page-kicker":   "灵性研究 · 萨古鲁 · 瑜伽科学",
+    "page-h1":       "开悟的本质",
+    "page-subtitle": "它是什么 · 它的样貌 · 如何趋近它——透过萨古鲁与世界各传统的视角",
+    "footer": "— 整理自萨古鲁的公开教学、伊莎基金会档案及跨传统学术研究 —",
+
+    "s01-h2": "概述：何为开悟？",
+    "s01-p1": "开悟是人类存在中最古老、最持久追求的状态之一——然而，讽刺的是，它也是最少被真正理解的。英文 Enlightenment 一词源于拉丁语 <em>illuminatio</em>，意指光明破除黑暗。在灵性层面，它指的并非积累更多知识，而是一个人体验存在的本质方式发生了根本性的转变。",
+    "s01-p2": "从本质上说，所有传统对开悟的描述都是：那种以渺小、分离、有界限的自我身份存在的普通感受消融了——留下的是更为广阔、清明与宁静的东西。这不是在普通意识上叠加一个新观念，而是遮蔽普通意识的扭曲、强迫和认同的消散。",
+    "s01-q1": "「开悟最难的地方在于它太简单了。」——萨古鲁",
+    "s01-p3": "这个悖论是真实的：根据几乎所有传统和老师的说法，那些寻道者千里迢迢、耗费数十年追寻的东西早已存在——它的遮蔽不是因为缺席，而是因为后来叠加上去的噪音。",
+
+    "s02-h2": "各传统的开悟观",
+    "s02-p1": "开悟的概念出现在地球上几乎每一个主要灵性传统中，尽管各有不同的称谓，并通过不同的框架加以理解。",
+    "tag-hindu": "印度教 / 吠檀多", "tag-buddhism": "佛教", "tag-taoism": "道家", "tag-sufism": "苏菲主义", "tag-christian": "基督教神秘主义",
+    "c01-label": "印度教 / 吠檀多", "c01-title": "解脱（Moksha / Mukti）", "c01-text": "从生死轮回（samsara）中解脱出来。认识到个体自我（Atman）与宇宙意识（Brahman）是同一的。消除无明（avidya）是路径。奥义书以「梵我不二（Tat Tvam Asi）」来描述它——你即那个。",
+    "c02-label": "佛教", "c02-title": "涅槃 / 菩提", "c02-text": "贪、嗔、痴的熄灭。佛陀在菩提树下的觉悟是原型。在禅宗中称为<em>悟</em>（satori）——对现实真实本性的一瞬间洞见，超越概念思维。自我被视为根本上是空（anatta）的。",
+    "c03-label": "道家", "c03-title": "与道合一", "c03-text": "与自然秩序和谐流动。真人以无为而行，没有个人议程，与道本身无法区分。没有「成为开悟者」的戏剧——只是回归从未失去的东西。",
+    "c04-label": "苏菲主义（伊斯兰）", "c04-title": "湮灭（Fana）——消融于神", "c04-text": "苏菲概念<em>fana</em>描述个体自我在神圣实在的海洋中彻底消融。留下的是<em>baqa</em>——在神中的延续。鲁米的全部诗歌都是对这种渴望、消融和回归本源的延伸隐喻。",
+    "c05-label": "基督教神秘主义", "c05-title": "与神合一 / 神化（Theosis）", "c05-text": "梅斯特·艾克哈特、十字若望、阿维拉的德兰等神秘主义者描述了「合一之道」——与神圣的完全融合。艾克哈特写到「突破」甚至是神的概念，抵达「神性」——纯粹、无象的存在之地。",
+    "c06-label": "瑜伽科学", "c06-title": "三摩地 / 解脱", "c06-text": "在瑜伽中，<em>三摩地（samadhi）</em>（源自 <em>sama</em>=平等心 + <em>dhi</em>=智性）描述一种完全融入的状态，观察者与被观察者之间的界限消融。这不是无意识——而是没有个人身份扭曲的超级意识。",
+    "s02-p2": "尽管语言和文化表面上存在差异，但在所有传统中，描述惊人地一致：个人自我的消融、无边界感的体验，以及一种不依赖外在环境的自然宁静与清明。",
+
+    "s03-h2": "萨古鲁对开悟的定义",
+    "s03-p1": "萨古鲁·贾吉·瓦苏德夫——瑜伽士、神秘主义者、伊莎基金会创始人——在当代灵性话语中，提供了理解开悟最独特、最接地气、最去神秘化的框架之一。他的方式剥除了超自然神话的外壳，将这一概念植根于人类意识的运作机制之中。",
+    "s03-q1": "「开悟不是一种成就，而是一次回家。如果你停止扭曲，回归你的本来面目，那就是开悟。」",
+    "s03-h3a": "回归本来面目",
+    "s03-p2": "在萨古鲁的框架中，每个人生来都拥有天真、喜悦和清明的自然状态。孩子在世界开始塑造并「污染」那种本来面目之前，是天然喜乐、活在当下的。大约在五六岁时，许多孩子就已经开始失去这种天真的开放性。到了青春期，它往往已深深埋藏。开悟就是剥除后来叠加上去的层层包裹——强迫性的认同、反应模式、对非我事物的无意识误认。",
+    "s03-h3b": "两度诞生：Dwija",
+    "s03-p3": "萨古鲁援引古印度的<em>Dwija</em>概念——「两度诞生者」。第一次诞生是肉身的、无意识的，由自然赋予。在那次诞生中，我们到来时喜悦而天真，但那种状态极易被干扰，因为它不是有意识地持守的。第二次诞生——开悟——是有意识地重新涌现入同样的喜悦之中。因为这一次是有意识的，所以外在事件或他人的行为无法将其夺走。",
+    "s03-q2": "「你所说的开悟意味着一种有意识的自我湮灭……如果你摧毁了一切你称之为'我自己'的东西，那么你就再次诞生了。这种诞生是百分之百有意识地发生的。」",
+    "s03-h3c": "清明取代迷惑",
+    "s03-p4": "在一个充满特色的简单比喻中，萨古鲁将开悟比作日出。在黑暗中，我们跌跌撞撞、迷惑不堪。当太阳升起时，风景没有任何改变——同一个世界还在那里。但现在我们清楚地看见了它。开悟恰恰如此：不是在现实中增添某种神秘的东西，而是清明之光突破了曾经笼罩一切的迷惑。",
+    "s03-h3d": "超越记忆，进入智性",
+    "s03-p5": "萨古鲁从认知角度描述开悟：将记忆与智性混淆。我们整个教育体系训练人们储存和检索信息——将这种记忆的积累误认为智性。一个开悟的人面对摆在他面前的任何事物，都能以全新的眼光看待它——纯粹的智性在运作，而非积累的偏见和记忆的滤镜。",
+    "s03-h3e": "给怀疑者的一个基准",
+    "s03-p6": "对于那些抗拒宏大灵性定义的人，萨古鲁提供了一个实用的基准：如果你生命中的一切都在出错——家庭、事业、健康——而你内心依然美好，那么在所有实际意义上，你就是开悟的。这不是一种依赖有利外部条件的状态，而是一种无条件的内在品质。",
+    "s03-q3": "「当你的生命一切都在崩溃时——如果你依然美好——那么，如果你一定要设立一个基准的话，我们就说你是开悟的吧。」",
+
+    "s04-h2": "萨古鲁的亲身开悟体验",
+    "s04-p1": "与许多纯粹用抽象语言讲述的灵性老师不同，萨古鲁曾以生动详尽的方式，公开讲述引发他自身开悟的那一具体事件——1982年，在印度迈索尔的查蒙迪山上，一次自发的觉醒。那时他25岁。",
+    "tl1-title": "一个普通的下午", "tl1-text": "那天下午，萨古鲁骑着摩托车上了查蒙迪山——这是他曾多次到访的地方。他坐在一块大岩石上，睁开眼睛，处于日常的心境中。他是一个成功的年轻人，在世俗标准下快乐，没有任何特别的灵性危机驱动着这一时刻。",
+    "tl2-title": "自我的消融", "tl2-text": "「过了几分钟，我不知道自己在哪里。在那一刻之前，我一直像大多数人一样，认为这是我，那是别人。但我第一次不知道什么是我，什么不是我。我所是的东西弥漫在了所有地方。」他依然完全清醒，眼睛睁开——然而自我与他者之间的界限已彻底蒸发。",
+    "tl3-title": "时间消融——四个半小时流逝了", "tl3-text": "他以为这段体验持续了五到十分钟。当他回过神来，已是晚上七点半——从下午三点算起，四个半小时已经过去。他成年后第一次泪流不止，衬衫已被完全浸湿。",
+    "tl4-title": "难以言说的极乐", "tl4-text": "「我正在迸发出另一种无法描述的极乐。我身体里的每一个细胞都在迸发着极乐。」他怀疑的头脑只给出一个答案：「也许你在发疯。」但他不在乎——「这是我所触碰过的最美好的东西。」",
+    "tl5-title": "它持续地回来", "tl5-text": "这段体验并非一次性的事件。它反复回来——有一次他坐在家人的餐桌旁，以为只过了两分钟，实际上七个小时已经过去。有一次，这种体验持续了整整十三天。六周之内，它成为了一种永久性的活生生的现实。",
+    "tl6-title": "身体的转变", "tl6-text": "「在那六周里，关于我的一切都改变了。我的声音变了，我眼睛的形状变了。如果你看那段时期我的照片，你可以清楚地看到身体发生了巨大的变化。」这种转变不仅仅是心理上的——它是生理性的、能量性的。",
+    "tl7-title": "普遍性的认识", "tl7-text": "「我只知道那在我内心迸发的喜悦；我知道这可以发生在每一个人身上。每一个人都拥有同样的内在成分。」这个认识最终成为伊莎基金会使命的基础。",
+
+    "s05-h2": "开悟的样貌",
+    "s05-p1": "最常见的问题之一是：你怎么认出一个开悟的人？萨古鲁带着独特的幽默与深度来回应这个问题——他既指出了开悟不是什么，也阐明了它真实呈现的样子。",
+    "s05-h3a": "它不是的样子",
+    "r01-title": "没有特殊的身体标记", "r01-text": "人们曾相信开悟会在身体上留下可见的标记。萨古鲁直接驳斥了这一点：「你只是知道怎么烧自己。你可以给自己烙上你想要的任何标记。」一个开悟的人恰恰是「一个无烙印的生命——没有标记」。",
+    "r02-title": "没有永久的出神状态", "r02-text": "瑜伽传统所描述的，并非那种浮游于世俗现实之上、无法正常运转的圣人的浪漫形象。真正的三摩地是一种高度清明的状态——而非一种让人丧失功能的喜悦迷雾。",
+    "r03-title": "不依赖外在条件", "r03-text": "大多数普通人在生活配合时是「美好」的——当人们按预期行为、当事情顺利时。开悟者的内在品质不会随外在条件而波动。这是关键的区别。",
+    "s05-h3b": "它真实的样子",
+    "t01-label": "无条件的内在幸福", "t01-text": "最根本的标志：喜悦、宁静和内在品质不依赖于外在发生的事情。家庭问题、职业失败、身体困难——这些都不会扰动根本的内在品质。这不是斯多葛式的压抑；而是与体验本身真正不同的关系。",
+    "t02-label": "纯粹的智性", "t02-text": "开悟者以全新的眼光感知每一个情境，没有积累的偏见、恐惧或欲望的滤镜。纯粹的智性——而非储存的反应模式——去应对任何发生的事。「无论你把什么放在他面前，他都会看着它说这就是它本来的样子。仅仅是因为他不会把记忆和智性混淆，如此而已。」",
+    "t03-label": "不同的临在", "t03-text": "即使不知道「开悟」这个词，人们也会本能地认识到某些人携带着一种根本上不同的存在品质。「从一个人到另一个人，有人似乎就是好一点，仅仅是他们存在的方式。不是因为他们的钱，他们的财富，或他们的资历。仅仅是他们坐着和站着的方式。」",
+    "t04-label": "清明——如日出", "t04-text": "开悟不是在风景中增添了一个新的物体——而是以完全的清明看见已然存在的风景。在黑暗中，你跌倒。当太阳升起时，自信出现了——你知道该去哪里，不该去哪里。开悟就是这种清明应用于整个生命的总和。",
+    "t05-label": "没有分离感", "t05-text": "核心的体验标志，在所有描述中一致：「我」与「其他一切」之间坚硬的界限消融了。不是在概念上——而是在体验上。你不是推断出自己与一切相连；你直接体验到它。",
+    "t06-label": "无烙印——没有隐藏的议程", "t06-text": "一个开悟的人没有隐藏的议程、没有强迫性的需求、没有驱动其行为的心理创伤。他们是「无烙印」的——不是因为生命从未挑战过他们，而是因为没有任何东西留下了持久的强迫性伤疤。",
+
+    "s06-h2": "四条道路——瑜伽作为转化的科学",
+    "s06-p1": "萨古鲁强调，瑜伽科学并不提供一条放之四海而皆准的开悟之路。相反，它识别出人类体验的四个根本维度——身体、心智、情感与能量——并通过每一个维度提供相应的道路。这就是四种经典的瑜伽。",
+    "s06-q1": "「这是你生命中仅有的四个现实：身体、心智、情感和能量。无论你希望对自己做什么，都必须在这四个层面上进行。」——萨古鲁",
+    "p01-label": "道路一", "p01-title": "业力瑜伽（Karma Yoga）", "p01-text": "<strong>通过身体与行动。</strong>无执行动的道路——以完全临在、不带「我是行动者」的认同来行事，行动便成为消融自我的载体。这是《薄伽梵歌》中克里希纳向阿周那传授的道路。",
+    "p02-label": "道路二", "p02-title": "智识瑜伽（Gnana Yoga）", "p02-text": "<strong>通过智性与探询。</strong>分辨性智慧的道路——不断探究什么是真实、什么不是，在所有身份认同的层层包裹之下，「我」究竟是谁。拉马那·马哈希「我是谁？」探询的道路。以锋利如刀的智力去探究存在的根本问题。",
+    "p03-label": "道路三", "p03-title": "虔信瑜伽（Bhakti Yoga）", "p03-text": "<strong>通过情感与奉献。</strong>通过爱，将个体自我臣服于更宏大的东西——神、上师、宇宙。当情感是全然的且指向超越个人欲望时，它便成为消融的载体。信徒的爱是如此完整，以至于爱者与被爱者融为一体。",
+    "p04-label": "道路四", "p04-title": "行法瑜伽（Kriya Yoga）", "p04-text": "<strong>通过能量与内在行动。</strong>通过特定的内在技法——呼吸、声音、专注——直接与身体系统的微妙能量（生命气）合作，重组存在的能量结构。萨古鲁将行法描述为「内在行动」，从内部瓦解业力残留。传统上需要一位在世的老师指导。",
+    "s06-p2": "没有人是纯粹的单一类型。每个人都是身体、心智、情感和能量的独特组合。萨古鲁所描述的伊莎瑜伽，是所有四个维度的综合——根据每个人最需要的东西来混配的比例。这就是为什么传统强调在世老师的重要性：为每一个独特的人类系统调配正确的组合。",
+    "s06-q2": "「走行法瑜伽这条路，你不仅在寻求觉悟，你还想知道创造生命的机制。」——萨古鲁",
+
+    "s07-h2": "如何趋近开悟——萨古鲁的实践指导",
+    "s07-p1": "萨古鲁关于开悟教导中最违反直觉的一面，或许是他最首要、最有力的指示：不要追求开悟。至少，不要以追求一个目标的方式去追求它。",
+    "s07-h3a": "停止追自己的尾巴",
+    "s07-p2": "萨古鲁用一只追逐自己尾巴的狗来比喻。如果你把开悟当作目标去追求，你追的是你自己对它的想法——而你的想法只能从你已知的东西中建构出来。「你不可能对一个你无法接触的东西有一个想法。」你正在追逐的关于开悟的概念，从定义上说，就不是开悟。",
+    "s07-q1": "「不要去追求开悟。你无法追求开悟。你如何追求一个你根本不了解的东西？就是继续走。毕竟，地球是圆的。如果你保持稳定地行走，你终将到达某个地方。」——萨古鲁",
+    "s07-h3b": "成为无条件美好的人",
+    "s07-p3": "萨古鲁提供了一个更可行的指示：专注于成为一个绝对的、无条件的美好人类。不要担心开悟——它太抽象了。相反，不懈地进步。变得更喜悦、更清醒、更有慈悲心——不是在一切顺利时，而尤其是在一切都在出错时。",
+    "g01-label": "向内转", "g01-text": "人类的体验是从内部创造的。根本的错误在于向外寻求——向财物、关系、地位——寻求那只能从内部而来的幸福。整个灵性过程是一次向内的转向：从朝外看，到向内觉察。",
+    "g02-label": "停止虚假的认同", "g02-text": "一个核心教导：当我们认同那些我们不是的东西时，痛苦就产生了。「当一个人认同他们所不是的东西——物质财富、家庭、教育——一个宁静的心智就变得不可能。」开始审查：你在认同什么？如果这一切都被剥除，留下的会是什么？",
+    "g03-label": "培养真正的渴望", "g03-text": "开悟需要一种真正的渴望——不是作为自我的工程，而是作为根本的需要。这通常只在一个人经历了足够多的平凡生活、看见了它的局限之后才会生起。「当你活得足够久，知道活得更好不会带你去任何地方，那时你才会想要超越生命。」这是无法强求的；它必须自然成熟。",
+    "g04-label": "找到正确的修炼", "g04-text": "萨古鲁的伊莎课程提供了结构化的修炼——特别是沙姆巴维摩诃穆德拉行法（Shambhavi Mahamudra Kriya），一项21分钟的日常修炼——作为内在转化的载体。他花了近18至20年时间准备这套修炼，使其安全、可供大众使用。持续的日常修炼被描述为至关重要的。",
+    "g05-label": "神圣空间与恩典", "g05-text": "萨古鲁将经过加持的空间——如伊莎瑜伽中心的达尔玛灵伽——描述为开悟的活体工具。他也承认上师的角色：「十辈子都无法学到的东西，在一瞬间传递给了我。」恩典在瑜伽框架中是真实的——上师与弟子之间的传承是最有力的载体之一。",
+    "g06-label": "做一个求道者，而非信仰者", "g06-text": "「遵循宗教的人被称为信仰者，走在灵性道路上的人被称为求道者。信仰来自对你不了解的事物的假设。求道来自诚实地看见'我不知道'，所以你想知道。」萨古鲁一贯鼓励人们以真正的开放性来接近存在——不做任何结论。",
+    "s07-h3c": "稳定胜于激烈",
+    "s07-p4": "萨古鲁解释说，灵性道路之所以对人们显得艰难，是因为他们「时断时续」。困难的不是道路本身，而是行者的不一致性。在一个方向上稳定、不动摇的前行——即使缓慢——终将到达某个深刻的地方。断断续续的灵性热情爆发，加上漫长的无意识时期，是无法累积的。",
+
+    "s08-h2": "业力、行法与解脱",
+    "s08-p1": "萨古鲁开悟框架的核心是对业力（karma）的理解——不是宇宙的惩罚，而是行为的积累记忆与残留，这些残留塑造并最终限制了我们的生命体验。",
+    "s08-h3a": "业力的真实含义",
+    "s08-p2": "萨古鲁将业力定义为不是道德记账（善行对恶行），而是嵌入系统中的生命记忆。它同时在多个层面运作：身体的、心智的、情感的和能量的。业力不仅是你自己的行为——它还包括你祖先在你内部运作的业力模式。它是把你与你的身体、与你体验现实的特定方式绑定在一起的「水泥」。",
+    "s08-q1": "「只要你确立在'这是我，那是你'之中，业力就是一个确立的现实——就像一个坚固的钢铁结构。然而，如果你迷惑了自己，'哪个是我，哪个不是我？'，业力突然失去了它的基础，就崩塌了。」",
+    "s08-h3b": "业力与行法的区别",
+    "s08-p3": "萨古鲁做了一个关键的区分：业力是留下残留印记、绑缚系统的行动。行法是一种特定类型的内在行动，在能量层面运作，瓦解业力残留而非创造新的层级。外在行动绑缚；内在能量行动释放。这就是为什么行法修炼是瑜伽走向解脱之路的核心。",
+    "s08-h3c": "彻底消融的危险",
+    "s08-p4": "在一个发人深省的教导中，萨古鲁指出业力不仅是束缚——它也是保护。它是维系意识与物质身体连接的机制。「如果所有业力都被消融，你将无法抓住你的身体——你会放下它。」这就是为什么对于不了解这一机制的存在而言，开悟的那一刻往往与离开身体的那一刻是同一的。只有走行法之路的人——懂得能量结构运作——才能在彻底消融之后保持身体。这就是所谓的<em>大三摩地（Mahasamadhi）</em>：在最终解脱的那一刻，有意识地、自主地离开身体。",
+    "s08-h3d": "消融业力的修炼",
+    "s08-p5": "萨古鲁指出了几种加速业力消融的方式。有意识的呼吸法（调息法与行法）能强化以太体——那个连接物质与非物质的微妙维度。经过加持的神圣空间拥有特定的转化能量，能加速这一过程。最终，完全放下对「自我」概念的执着，便消融了业力赖以存在的根基。",
+
+    "s09-h2": "关于开悟的常见误解",
+    "s09-p1": "鉴于围绕开悟的神秘气氛，已经积累了许多根深蒂固的误解——有些是文化上的，有些是心理上的。萨古鲁直接处理了其中几个。",
+    "m01-title": "误解一：开悟是一种成就", "m01-text": "将开悟框架为一种需要达成的东西——像一个学位或山顶——会导致自我驱动的灵性追求。追求开悟的自我，恰恰是阻碍开悟的东西。开悟不是获得某种新的东西，而是放下某种虚假的东西。它是一种减法，而非加法。",
+    "m02-title": "误解二：开悟是少数人的特权", "m02-text": "萨古鲁很明确：「每一个人都拥有同样的内在成分。这对每一个人来说都是可能的。」开悟不是基因的彩票，也不是神的拣选。它是任何一个消除了其障碍的人类的自然目的地。这种能力是普遍的。",
+    "m03-title": "误解三：开悟需要出离世界", "m03-text": "开悟之人如同住在山洞里的隐士这一形象，被萨古鲁本人的例子所挑战——一个经营着全球基金会、在联合国和达沃斯发言、骑摩托车、打高尔夫的人。开悟是一种内在状态，而非外在的生活方式。",
+    "m04-title": "误解四：开悟只是宁静与快乐", "m04-text": "萨古鲁做了一个微妙的区分。宁静与快乐是普通体验质量的改善——美好，但仍在同一维度之内。开悟是一种维度上的整体转变：不是迈向普通体验更好的版本，而是超越普通体验的结构本身。",
+    "m05-title": "误解五：开悟有固定的标准", "m05-text": "「外面没有一个基准——'这就是开悟！'」萨古鲁拒绝将开悟变成一种固定的、可测量的、可认证的状态。它是一种活生生的、动态的现实——而非一张证书。拥有一个固定的开悟概念的危险在于，你会追求并可能实现你的那个概念，而那不是开悟。",
+    "m06-title": "误解六：用思考可以达到开悟", "m06-text": "对开悟的智识理解不是开悟。「开悟是一种我们无法思考的方式。你无法把它想出来，你只能走进去。」思维只能重新组合它已知的东西。开悟超越了思维所能建构的范围。它需要一种体验上的转变，而非概念上的精炼。",
+    "s09-q1": "「无论你是否攀登了珠穆朗玛峰，无论你是否成为了地球上最富有的人——你在这个星球上的生命体验应该是愉悦的。你必须喜悦地活着并离去。每一个人都值得，每一个人都有能力。」——萨古鲁",
+
+    "s10-h2": "更改历史",
+    "ch-ver": "版本", "ch-author": "作者", "ch-changes": "更改内容",
+    "ch-today": "新增英文/中文语言切换及完整双语翻译；修复卡片与风险卡片网格等宽布局；重建更改历史表格结构与HTML；移除段落宽度限制以实现统一布局；改善暗色模式下提示文字的可读性。",
+    "ch-yesterday": "初始版本。深度研究文件，涵盖世界各传统与萨古鲁具体教导中的开悟本质——包括他的亲身觉醒体验、开悟的样貌、四种瑜伽道路、业力与解脱、实践指导及常见误解。"
+  }
+};
+
+// ─────────────────────────────────────────────
+//  LANGUAGE ENGINE
+// ─────────────────────────────────────────────
+let currentLang = 'en';
+
+function applyLang(lang) {
+  const dict = T[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key] !== undefined) {
+      el.innerHTML = dict[key];
+    }
+  });
+  document.documentElement.lang = lang;
+  document.body.classList.toggle('zh', lang === 'zh');
+  const btn = document.getElementById('lang-btn');
+  if (lang === 'zh') {
+    btn.textContent = 'ENG';
+    btn.classList.add('active');
+    btn.title = 'Switch to English';
+  } else {
+    btn.textContent = '中文';
+    btn.classList.remove('active');
+    btn.title = 'Switch to Chinese / 切换中文';
+  }
+}
+
+function toggleLang() {
+  currentLang = currentLang === 'en' ? 'zh' : 'en';
+  applyLang(currentLang);
+  try { localStorage.setItem('lang', currentLang); } catch(e){}
+}
+
+// ─────────────────────────────────────────────
+//  THEME TOGGLE
+// ─────────────────────────────────────────────
+function toggleTheme() {
+  const isLight = document.body.classList.toggle('light');
+  document.getElementById('toggle-btn').textContent = isLight ? '🌙' : '☀';
+  try { localStorage.setItem('theme', isLight ? 'light' : 'dark'); } catch(e){}
+}
+
+// ─────────────────────────────────────────────
+//  SCROLL SPY
+// ─────────────────────────────────────────────
+const sectionIds = ['sec-overview','sec-traditions','sec-sadhguru-definition','sec-experience','sec-looks-like','sec-four-paths','sec-how-to','sec-karma','sec-misconceptions','sec-change-history'];
+
+function goTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function updateActiveNav() {
+  let current = sectionIds[0];
+  sectionIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top <= 80) current = id;
+  });
+  document.querySelectorAll('.nav-item').forEach((item, i) => {
+    item.classList.toggle('active', sectionIds[i] === current);
+  });
+}
+window.addEventListener('scroll', updateActiveNav, { passive: true });
+updateActiveNav();
+
+// ─────────────────────────────────────────────
+//  INIT — restore saved prefs
+// ─────────────────────────────────────────────
+(function () {
+  try {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+      document.body.classList.add('light');
+      document.getElementById('toggle-btn').textContent = '🌙';
+    }
+    const savedLang = localStorage.getItem('lang');
+    if (savedLang === 'zh') {
+      currentLang = 'zh';
+      applyLang('zh');
+    }
+  } catch(e) {}
+})();
+</script>
+</body>
+</html>

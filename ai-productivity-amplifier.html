@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 作为效率放大器：工作原理与使用边界</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+/* ── CSS Variables — Dark (default) ── */
+:root {
+  --bg:           #06080e;
+  --bg2:          #0c1119;
+  --surface:      #0d1120;
+  --surface2:     #111827;
+  --surface3:     #1a2333;
+  --border:       #1c2b3e;
+  --border2:      #243347;
+  --teal:         #22d3a4;
+  --teal-dim:     rgba(34,211,164,0.10);
+  --teal-glow:    rgba(34,211,164,0.20);
+  --amber:        #f59e0b;
+  --amber-dim:    rgba(245,158,11,0.10);
+  --red:          #f87171;
+  --red-dim:      rgba(248,113,113,0.09);
+  --blue:         #60a5fa;
+  --blue-dim:     rgba(96,165,250,0.09);
+  --violet:       #a78bfa;
+  --violet-dim:   rgba(167,139,250,0.09);
+  --text:         #dde5f0;
+  --dim:          #8aa0b8;
+  --muted:        #445870;
+  --white:        #ffffff;
+  --topbar-bg:    rgba(6,8,14,0.97);
+  --topbar-border:#1c2b3e;
+  --sidebar-bg:   #07090f;
+  --sidebar-border:#1c2b3e;
+  --nav-color:    #2a4060;
+  --nav-hover:    #8aa0b8;
+  --nav-active-bg:rgba(34,211,164,0.06);
+  --nav-active-color:#22d3a4;
+  --nav-active-border:#22d3a4;
+  --card-bg:      #0d1120;
+  --card-border:  #1c2b3e;
+  --callout-bg:   rgba(245,158,11,0.06);
+  --callout-border:#f59e0b;
+  --callout-text: #c8924a;
+  --ver-color:    #22d3a4;
+  --ver-bg:       rgba(34,211,164,0.06);
+  --ver-border:   rgba(34,211,164,0.20);
+  --change-text:  #4a6080;
+  --change-ver:   #22d3a4;
+  --change-auth:  #3a5070;
+  --change-border:#1c2b3e;
+  --divider:      #1c2b3e;
+  --footer-color: #1c2b3e;
+  --tip-bg:       rgba(34,211,164,0.04);
+  --tip-border:   rgba(34,211,164,0.15);
+  --tip-label:    #1a6050;
+  --tip-text:     #3a8070;
+  --risk-bg:      rgba(248,113,113,0.05);
+  --risk-border:  rgba(248,113,113,0.25);
+  --risk-title:   #c05a5a;
+  --risk-text:    #8a5a5a;
+  --person-bg:    #0d1120;
+  --person-border:#1c3050;
+  --person-name:  #60a5fa;
+  --person-role:  #445870;
+}
+
+/* ── Light mode overrides ── */
+body.light {
+  --bg:           #f4f1ec;
+  --bg2:          #ece8e0;
+  --surface:      #faf7f2;
+  --surface2:     #f2ede4;
+  --surface3:     #e8e2d8;
+  --border:       #d4ccc0;
+  --border2:      #c8bfb0;
+  --teal:         #0e7a5a;
+  --teal-dim:     rgba(14,122,90,0.08);
+  --teal-glow:    rgba(14,122,90,0.16);
+  --amber:        #b45309;
+  --amber-dim:    rgba(180,83,9,0.08);
+  --red:          #dc2626;
+  --red-dim:      rgba(220,38,38,0.07);
+  --blue:         #2563eb;
+  --blue-dim:     rgba(37,99,235,0.08);
+  --violet:       #7c3aed;
+  --violet-dim:   rgba(124,58,237,0.07);
+  --text:         #1a1e2e;
+  --dim:          #5a6880;
+  --muted:        #8a96a8;
+  --topbar-bg:    #1a1e2e;
+  --topbar-border:#252a3a;
+  --sidebar-bg:   #ece8e0;
+  --sidebar-border:#d4ccc0;
+  --nav-color:    #9090a0;
+  --nav-hover:    #2a3040;
+  --nav-active-bg:rgba(14,122,90,0.07);
+  --nav-active-color:#0e7a5a;
+  --nav-active-border:#0e7a5a;
+  --card-bg:      #faf7f2;
+  --card-border:  #d4ccc0;
+  --callout-bg:   #fdf5eb;
+  --callout-border:#b45309;
+  --callout-text: #7a3a10;
+  --ver-color:    #0e7a5a;
+  --ver-bg:       rgba(14,122,90,0.07);
+  --ver-border:   rgba(14,122,90,0.25);
+  --change-text:  #4a5868;
+  --change-ver:   #0e7a5a;
+  --change-auth:  #8a96a8;
+  --change-border:#d4ccc0;
+  --divider:      #d4ccc0;
+  --footer-color: #c8bfb0;
+  --tip-bg:       rgba(14,122,90,0.05);
+  --tip-border:   rgba(14,122,90,0.20);
+  --tip-label:    #5aaa8a;
+  --tip-text:     #1a5a40;
+  --risk-bg:      #fff5f5;
+  --risk-border:  rgba(220,38,38,0.30);
+  --risk-title:   #b02020;
+  --risk-text:    #602020;
+  --person-bg:    #f0f4ff;
+  --person-border:#b0c0e0;
+  --person-name:  #2048a0;
+  --person-role:  #506080;
+}
+
+/* ── Body ── */
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Lora', Georgia, serif;
+  font-size: 15px;
+  line-height: 1.8;
+  min-height: 100vh;
+  transition: background 0.25s, color 0.25s;
+}
+
+body:not(.light)::before {
+  content: '';
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px);
+  pointer-events: none; z-index: 9999;
+}
+
+/* ── Topbar ── */
+.topbar {
+  position: fixed; top:0; left:0; right:0; height:52px;
+  background: var(--topbar-bg);
+  border-bottom: 1px solid var(--topbar-border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 20px;
+  z-index: 200;
+  backdrop-filter: blur(8px);
+}
+.topbar-left  { display:flex; align-items:center; gap:12px; }
+.topbar-right { display:flex; align-items:center; gap:10px; }
+
+.pulse-dot {
+  width:7px; height:7px; border-radius:50%;
+  background: var(--teal); box-shadow: 0 0 6px var(--teal);
+  animation: pulse 2.4s ease-in-out infinite; flex-shrink:0;
+}
+@keyframes pulse { 0%,100%{opacity:1;box-shadow:0 0 6px var(--teal)}50%{opacity:.35;box-shadow:0 0 2px var(--teal)} }
+
+.topbar-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.05rem; font-weight: 600;
+  color: var(--white);
+  letter-spacing: 0.01em;
+}
+body.light .topbar-name { color: #f0f4ff; }
+
+.topbar-subtitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--teal); opacity: 0.85;
+}
+
+.version-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.12em;
+  color: var(--ver-color);
+  background: var(--ver-bg);
+  border: 1px solid var(--ver-border);
+  padding: 3px 10px;
+}
+
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  width: 28px; height: 28px;
+  border-radius: 4px; cursor: pointer;
+  font-size: 13px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.theme-toggle:hover { border-color: var(--teal); color: var(--teal); }
+
+/* ── Sidebar ── */
+.sidebar {
+  position: fixed; top:52px; left:0;
+  width: 200px; height: calc(100vh - 52px);
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--sidebar-border);
+  padding: 24px 0; overflow-y: auto;
+  z-index: 100; transition: background 0.25s;
+}
+.sidebar-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--muted); padding: 0 20px 14px; display: block; opacity: 0.5;
+}
+.nav-item {
+  display: flex; align-items: baseline; gap: 8px;
+  padding: 8px 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: var(--nav-color);
+  text-decoration: none; letter-spacing: 0.04em;
+  border-left: 2px solid transparent;
+  cursor: pointer; transition: all 0.15s; line-height: 1.4;
+}
+.nav-item:hover { color: var(--nav-hover); border-left-color: var(--border); }
+.nav-item.active {
+  color: var(--nav-active-color);
+  border-left-color: var(--nav-active-border);
+  background: var(--nav-active-bg);
+}
+.nav-num { font-size: 10px; opacity: 0.6; flex-shrink: 0; }
+.nav-dot  { opacity: 0.4; flex-shrink: 0; }
+
+/* ── Main content ── */
+.main {
+  margin-left: 200px;
+  padding: 80px 52px 80px 48px;
+  max-width: 1080px;
+}
+@media (max-width: 860px) {
+  .sidebar { display: none; }
+  .main { margin-left: 0; padding: 72px 20px 48px; }
+}
+
+/* ── Page header ── */
+.kicker {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--teal); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.kicker::after { content:''; flex:1; height:1px; background:var(--border); }
+
+h1 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300; line-height: 1.2;
+  color: var(--white); margin-bottom: 12px; letter-spacing: -0.01em;
+}
+body.light h1 { color: var(--text); }
+
+.subtitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 36px;
+}
+
+/* ── Divider ── */
+.divider { border: none; border-top: 1px solid var(--divider); margin: 40px 0; }
+
+/* ── Sections ── */
+.section { margin-bottom: 4px; }
+
+h2 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.5rem; font-weight: 400;
+  color: var(--white); margin-bottom: 20px;
+  display: flex; align-items: baseline; gap: 12px;
+  padding-bottom: 10px; border-bottom: 1px solid var(--border);
+}
+body.light h2 { color: var(--text); }
+.sec-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: var(--teal); opacity: 0.7;
+}
+
+h3 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--amber); margin: 28px 0 12px; opacity: 0.9;
+}
+
+/* ── Typography ── */
+.body-text {
+  font-size: 15px; line-height: 1.85; color: var(--dim);
+  margin-bottom: 16px;
+}
+
+/* ── Callout ── */
+.callout {
+  background: var(--callout-bg);
+  border-left: 3px solid var(--callout-border);
+  border-radius: 0 4px 4px 0;
+  padding: 16px 20px; margin: 20px 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; line-height: 1.8;
+  color: var(--callout-text); letter-spacing: 0.02em;
+}
+
+/* ── Card grid ── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px; margin: 20px 0;
+}
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 6px; padding: 18px 20px;
+}
+.card-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--teal); margin-bottom: 8px; opacity: 0.8;
+}
+.card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem; font-weight: 600; color: var(--text);
+  margin-bottom: 6px;
+}
+.card-text { font-size: 13px; line-height: 1.7; color: var(--dim); }
+
+/* ── Tips list ── */
+.tips { display: grid; gap: 10px; margin: 20px 0; }
+.tip {
+  background: var(--tip-bg);
+  border: 1px solid var(--tip-border);
+  border-radius: 4px; padding: 12px 16px;
+  display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start;
+}
+.tip-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--tip-label); white-space: nowrap; padding-top: 2px;
+}
+.tip-text { font-size: 13px; line-height: 1.65; color: var(--tip-text); }
+
+/* ── Generic data table ── */
+.data-table { width:100%; border-collapse: collapse; margin: 20px 0; font-size: 13px; }
+.data-table th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--muted); padding: 8px 12px;
+  border-bottom: 1px solid var(--border); font-weight: normal; text-align: left;
+}
+.data-table td {
+  padding: 10px 12px; font-size: 13px; color: var(--dim);
+  border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.6;
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table td:first-child { color: var(--text); font-weight: 500; }
+
+/* ── Change history table ── */
+.change-table { width:100%; border-collapse: collapse; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+.change-table th {
+  text-align: left; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--muted); padding: 6px 12px;
+  border-bottom: 1px solid var(--change-border); font-weight: normal;
+}
+.change-table td {
+  padding: 10px 12px; color: var(--change-text);
+  border-bottom: 1px solid var(--change-border); vertical-align: top; line-height: 1.5;
+}
+.change-table td:first-child { color: var(--change-ver); width: 110px; white-space: nowrap; }
+.change-table td:nth-child(2) { color: var(--change-auth); width: 100px; white-space: nowrap; }
+
+/* ── Footer ── */
+.footer-note {
+  text-align: center; font-size: 11px; color: var(--footer-color);
+  font-family: 'JetBrains Mono', monospace; letter-spacing: 0.1em; margin-top: 24px;
+}
+
+/* ── Document-specific: stat blocks ── */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px; margin: 24px 0;
+}
+.stat-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--teal);
+  border-radius: 4px; padding: 16px 18px;
+  text-align: center;
+}
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem; font-weight: 600;
+  color: var(--teal); line-height: 1; margin-bottom: 4px;
+}
+.stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); line-height: 1.5;
+}
+.stat-context { font-size: 11px; color: var(--dim); margin-top: 6px; font-style: italic; }
+
+/* ── Document-specific: research study card ── */
+.study-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--blue);
+  border-radius: 0 6px 6px 0;
+  padding: 18px 22px; margin: 20px 0;
+}
+.study-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 10px; opacity: 0.8;
+}
+.study-finding {
+  font-size: 14px; line-height: 1.8; color: var(--dim);
+}
+.study-finding strong { color: var(--text); font-weight: 500; }
+.study-quote {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; line-height: 1.75;
+  color: var(--dim); font-style: italic;
+  border-left: 2px solid var(--border2);
+  padding: 8px 14px; margin: 12px 0 0; letter-spacing: 0.01em;
+}
+.study-quote cite {
+  display: block; margin-top: 6px;
+  font-size: 10px; color: var(--muted); font-style: normal;
+  letter-spacing: 0.12em; text-transform: uppercase;
+}
+
+/* ── Document-specific: law header ── */
+.law-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--amber); background: var(--amber-dim);
+  border: 1px solid rgba(245,158,11,0.2);
+  padding: 3px 10px; border-radius: 2px;
+  margin-bottom: 14px; margin-top: 4px;
+}
+
+/* ── Document-specific: ratchet visual ── */
+.ratchet {
+  display: flex; flex-direction: column; gap: 0;
+  margin: 20px 0; border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
+}
+.ratchet-step {
+  display: grid; grid-template-columns: 48px 1fr;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+}
+.ratchet-step:last-child { border-bottom: none; }
+.ratchet-step:hover { background: var(--surface2); }
+.ratchet-n {
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px; font-weight: 600; color: var(--border2);
+  background: var(--surface); border-right: 1px solid var(--border);
+}
+.ratchet-body { padding: 12px 16px; }
+.ratchet-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--amber); margin-bottom: 4px;
+}
+.ratchet-text { font-size: 13px; color: var(--dim); line-height: 1.6; }
+
+/* ── Document-specific: truth cards ── */
+.truth-list { display: flex; flex-direction: column; gap: 2px; margin: 20px 0; }
+.truth-card {
+  display: grid; grid-template-columns: 36px 1fr;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 4px; overflow: hidden; transition: border-color 0.2s;
+}
+.truth-card:hover { border-color: var(--border2); }
+.truth-n {
+  display: flex; align-items: flex-start; justify-content: center;
+  padding-top: 16px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem; font-weight: 600; color: var(--teal);
+  background: var(--teal-dim);
+  border-right: 1px solid var(--border);
+}
+.truth-body { padding: 14px 18px; }
+.truth-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--teal); margin-bottom: 6px;
+}
+.truth-text { font-size: 13px; color: var(--dim); line-height: 1.7; }
+.truth-text strong { color: var(--text); font-weight: 500; }
+
+/* ── Document-specific: two-column comparison ── */
+.two-col {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 14px; margin: 20px 0;
+}
+.col-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px; padding: 16px 18px;
+}
+.col-block-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.col-block-label.known { color: var(--teal); }
+.col-block-label.unknown { color: var(--amber); }
+.col-block-text { font-size: 13px; line-height: 1.75; color: var(--dim); }
+.col-block-text strong { color: var(--text); font-weight: 500; }
+.flow-arrow {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  color: var(--muted); padding: 4px 0;
+}
+
+/* ── Document-specific: strategy table ── */
+.strategy-grid { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+.strategy-row {
+  display: grid; grid-template-columns: 120px 1fr 1fr;
+  gap: 12px; align-items: start;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 4px; padding: 14px 16px; font-size: 13px;
+}
+.strategy-type {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--teal);
+}
+.strategy-what { color: var(--dim); line-height: 1.6; }
+.strategy-how { color: var(--muted); line-height: 1.6; font-style: italic; }
+.strategy-row-header {
+  display: grid; grid-template-columns: 120px 1fr 1fr;
+  gap: 12px; padding: 0 16px 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted);
+}
+
+/* ── Document-specific: reference table ── */
+.ref-table { width:100%; border-collapse: collapse; margin: 20px 0; font-size: 13px; }
+.ref-table th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--muted); padding: 8px 12px;
+  border-bottom: 1px solid var(--border); font-weight: normal; text-align: left;
+}
+.ref-table td {
+  padding: 10px 12px; color: var(--dim);
+  border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.65;
+}
+.ref-table tr:last-child td { border-bottom: none; }
+.ref-table td:first-child {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: var(--teal); width: 220px;
+  white-space: nowrap;
+}
+
+/* ── Executive Summary components ── */
+.exec-thesis {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--teal);
+  border-radius: 4px;
+  padding: 22px 26px;
+  margin: 0 0 24px;
+}
+.exec-thesis-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--teal); margin-bottom: 10px; opacity: 0.8;
+}
+.exec-thesis-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem; font-weight: 400; line-height: 1.75;
+  color: var(--text);
+}
+.exec-thesis-text strong { color: var(--teal); font-weight: 600; }
+
+.law-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px; margin: 0 0 24px;
+}
+.law-mini {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--amber);
+  border-radius: 0 4px 4px 0;
+  padding: 14px 16px;
+}
+.law-mini-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--amber); margin-bottom: 6px;
+}
+.law-mini-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem; font-weight: 600; color: var(--text);
+  margin-bottom: 6px; line-height: 1.3;
+}
+.law-mini-desc { font-size: 12px; line-height: 1.65; color: var(--dim); }
+
+.exec-data-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px; margin: 0 0 24px;
+}
+.exec-data-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 12px 14px; text-align: center;
+}
+.exec-data-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem; font-weight: 600;
+  color: var(--teal); line-height: 1; margin-bottom: 4px;
+}
+.exec-data-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); line-height: 1.5; margin-bottom: 4px;
+}
+.exec-data-source { font-size: 10px; color: var(--border2); font-style: italic; }
+
+.exec-insight {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 10px; margin: 0 0 24px;
+}
+.exec-insight-col {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px; padding: 14px 18px;
+}
+.exec-insight-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.exec-insight-label.known  { color: var(--teal); }
+.exec-insight-label.unknown { color: var(--amber); }
+.exec-insight-text { font-size: 13px; line-height: 1.7; color: var(--dim); }
+.exec-insight-text strong { color: var(--text); font-weight: 500; }
+
+.exec-conclusion {
+  background: var(--callout-bg);
+  border-left: 3px solid var(--callout-border);
+  border-radius: 0 4px 4px 0;
+  padding: 14px 20px;
+  font-size: 13px; line-height: 1.8; color: var(--callout-text);
+}
+.exec-conclusion strong { color: var(--amber); }
+
+@media (max-width: 640px) {
+  .law-mini-grid { grid-template-columns: 1fr; }
+  .exec-data-strip { grid-template-columns: repeat(2, 1fr); }
+  .exec-insight { grid-template-columns: 1fr; }
+}
+
+/* ── Language switching ── */
+.lang-en { display: none; }
+body.en .lang-zh { display: none; }
+body.en .lang-en { display: block; }
+span.lang-en { display: none; }
+body.en span.lang-zh { display: none; }
+body.en span.lang-en { display: inline; }
+
+.lang-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  height: 28px; padding: 0 9px;
+  border-radius: 4px; cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.08em;
+  display: flex; align-items: center;
+  transition: all 0.2s;
+}
+.lang-toggle:hover { border-color: var(--teal); color: var(--teal); }
+</style>
+</head>
+<body>
+
+<!-- ── Topbar ── -->
+<header class="topbar">
+  <div class="topbar-left">
+    <span class="pulse-dot"></span>
+    <span class="topbar-subtitle"><span class="lang-zh">AI 作为效率放大器 · 工作原理与使用边界</span><span class="lang-en">AI as Productivity Amplifier · Working Principles and Usage Boundaries</span></span>
+  </div>
+  <div class="topbar-right">
+    <span class="version-badge">v2026.5.17</span>
+    <button class="lang-toggle" onclick="toggleLang()" id="lang-btn" title="切换语言 / Switch language">ENG</button>
+    <button class="theme-toggle" onclick="toggleTheme()" id="toggle-btn" title="Toggle light/dark">☀</button>
+  </div>
+</header>
+
+<!-- ── Sidebar navigator ── -->
+<nav class="sidebar">
+  <span class="sidebar-label">Sections</span>
+  <a class="nav-item" onclick="goTo('sec-thesis')"><span class="nav-num">01</span><span class="nav-dot">·</span><span class="lang-zh">放大器原理</span><span class="lang-en">Amplifier Model</span></a>
+  <a class="nav-item" onclick="goTo('sec-evidence')"><span class="nav-num">02</span><span class="nav-dot">·</span><span class="lang-zh">实证数据</span><span class="lang-en">Evidence</span></a>
+  <a class="nav-item" onclick="goTo('sec-jevons')"><span class="nav-num">03</span><span class="nav-dot">·</span><span class="lang-zh">三条历史规律</span><span class="lang-en">3 Patterns</span></a>
+  <a class="nav-item" onclick="goTo('sec-org')"><span class="nav-num">04</span><span class="nav-dot">·</span><span class="lang-zh">为何难以感知</span><span class="lang-en">Visibility Gap</span></a>
+  <a class="nav-item" onclick="goTo('sec-strategy')"><span class="nav-num">05</span><span class="nav-dot">·</span><span class="lang-zh">策略</span><span class="lang-en">Strategy</span></a>
+  <a class="nav-item" onclick="goTo('sec-conclusion')"><span class="nav-num">06</span><span class="nav-dot">·</span><span class="lang-zh">结语</span><span class="lang-en">Conclusion</span></a>
+  <a class="nav-item" onclick="goTo('sec-references')"><span class="nav-num">07</span><span class="nav-dot">·</span><span class="lang-zh">参考文献</span><span class="lang-en">References</span></a>
+  <a class="nav-item" onclick="goTo('sec-change-history')"><span class="nav-num">08</span><span class="nav-dot">·</span>Change History</a>
+</nav>
+
+<!-- ── Main content ── -->
+<main class="main">
+
+  <div class="kicker"><span class="lang-zh">分析框架 · 认知科学 / 决策理论 / 技术史 / 信息论</span><span class="lang-en">Analytical Framework · Cognitive Science / Information Theory / Decision Theory / Technology History</span></div>
+  <h1><span class="lang-zh">AI 作为效率放大器</span><span class="lang-en">AI as Productivity Amplifier</span><br><em style="font-style:italic;color:var(--teal);font-size:0.72em;letter-spacing:0.01em;" class="lang-zh">Working Principles and Usage Boundaries</em></h1>
+  <p class="subtitle"><span class="lang-zh">工作原理与使用边界 · Working Principles and Usage Boundaries</span><span class="lang-en">Working Principles and Usage Boundaries</span></p>
+
+  <hr class="divider">
+
+  <div id="sec-thesis" class="section">
+    <h2><span class="sec-num">01</span> <span class="lang-zh">放大器原理——工作机制与使用边界</span><span class="lang-en">The Amplifier Model — Working Principles and Usage Boundaries</span></h2>
+
+    <div class="lang-zh">
+
+    <div class="exec-thesis">
+      <div class="exec-thesis-label">核心论点 · Central Argument</div>
+      <div class="exec-thesis-text">AI 是真实的效率放大器——但它的放大效果有一个明确的前提条件：<strong>任务的确定性</strong>。当路径已知、答案可以被明确，AI 放大执行效率；当路径未知、需要探索和判断，AI 加速信息供给，但消除不确定性的认知工作依然由人承担，代价是认知密度的增加。<strong>理解这个效率放大器，是让 AI 真正为你服务的前提。</strong></div>
+    </div>
+
+    <div class="law-mini-grid">
+      <div class="law-mini" style="border-left-color:var(--teal);">
+        <div class="law-mini-tag" style="color:var(--teal);">执行层 · 确定性高</div>
+        <div class="law-mini-name">AI 是高效的执行放大器</div>
+        <div class="law-mini-desc">任务路径已知，答案可以被明确定义。AI 在这个域内效率极高：格式化、起草、检索、代码生成、摘要。认知负担确实降低，产出速度真实提升。</div>
+      </div>
+      <div class="law-mini" style="border-left-color:var(--amber);">
+        <div class="law-mini-tag" style="color:var(--amber);">判断层 · 不确定性高</div>
+        <div class="law-mini-name">AI 是有限的信息加速器</div>
+        <div class="law-mini-desc">任务路径未知，需要 RCA、trade-off、决策。AI 加速信息供给，但理解、综合、判断——消除不确定性本身——仍是人的工作。信息来得更快，认知密度随之增加。</div>
+      </div>
+      <div class="law-mini" style="border-left-color:var(--dim);">
+        <div class="law-mini-tag" style="color:var(--dim);">边界的代价</div>
+        <div class="law-mini-name">错位发生在边界处</div>
+        <div class="law-mini-desc">组织按照"执行层速度"校准对判断层的预期。AI 加速了信息的输入，却没有加速判断的形成。这个错位，是知识工作者感到在更高强度使用脑力的结构性原因。</div>
+      </div>
+    </div>
+
+    <div class="exec-data-strip">
+      <div class="exec-data-item"><div class="exec-data-num">+14%</div><div class="exec-data-label">脑力消耗增加</div><div class="exec-data-source">BCG, N=1,488, 2026</div></div>
+      <div class="exec-data-item"><div class="exec-data-num">67%</div><div class="exec-data-label">工作者工时增加</div><div class="exec-data-source">UC Berkeley, 2026</div></div>
+      <div class="exec-data-item"><div class="exec-data-num">+40%</div><div class="exec-data-label">速度基线被上调</div><div class="exec-data-source">GitLab Survey, 2026</div></div>
+      <div class="exec-data-item"><div class="exec-data-num">26%</div><div class="exec-data-label">营销岗位认知过载</div><div class="exec-data-source">BCG Brain Fry, 2026</div></div>
+    </div>
+
+    <hr style="border:none;border-top:1px solid var(--border);margin:28px 0;">
+    <h3 style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber);margin:0 0 16px;">放大器的工作边界——双层结构详解</h3>
+
+    <p class="body-text">AI 的放大效果不是均匀分布的——它沿着一条轴变化：任务的确定性。在这条轴的两端，AI 的角色和代价截然不同。</p>
+
+    <div class="two-col">
+      <div class="col-block" style="border-color:rgba(34,211,164,0.3);background:rgba(34,211,164,0.04);">
+        <div class="col-block-label known">执行层 · 确定性高</div>
+        <div class="col-block-text">
+          <div class="flow-arrow">路径已知，信息充分</div>
+          <div class="flow-arrow">→ AI 是高效的执行放大器</div>
+          <div class="flow-arrow">→ 效率提升真实，认知负担降低</div>
+          <div class="flow-arrow">→ <strong>充分 delegate，轻度审核</strong></div>
+        </div>
+      </div>
+      <div class="col-block" style="border-color:rgba(245,158,11,0.3);background:rgba(245,158,11,0.04);">
+        <div class="col-block-label unknown">判断层 · 不确定性高</div>
+        <div class="col-block-text">
+          <div class="flow-arrow">路径未知，需探索和决策</div>
+          <div class="flow-arrow">→ AI 是有限的信息加速器</div>
+          <div class="flow-arrow">→ 信息来得更快，认知密度增加</div>
+          <div class="flow-arrow">→ <strong>人主导判断，AI 辅助信息</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <h3>信息 vs. 知识：放大器能跨越哪一步</h3>
+    <p class="body-text">理解双层结构的关键，是区分两个概念：AI 提供<strong>信息</strong>（数据、文献、选项、框架），而<strong>知识</strong>是信息经过判断、结合情境、消除不确定性之后的产物。从信息到知识的最后一步，需要人的判断力——因为这一步的前提是知道什么是"对的答案"，而在高不确定性情境下恰恰不知道。</p>
+    <p class="body-text">AI 把你带到知识的门口，但推开门的动作是你的。它能让你更快地站在门口，却无法替你进去。这就是为什么判断层的工作不会因为 AI 的存在而变少——它只是变得更密集了。</p>
+
+    <h3>认知密度增加的三个机制</h3>
+    <div class="tips">
+      <div class="tip">
+        <div class="tip-label">机制 01</div>
+        <div class="tip-text"><strong>信息量增加，判断量不变</strong>——AI 快速供给大量信息，但哪些信息有用、哪些没用、权重如何，这些判断仍是人的。信息更多，判断更忙。</div>
+      </div>
+      <div class="tip">
+        <div class="tip-label">机制 02</div>
+        <div class="tip-text"><strong>委托了执行，保留了责任</strong>——当 AI 生成 RCA 报告或架构建议，审核它要求以外部专家视角重建一个自己未参与构建的推理过程。需要同时激活理解（comprehension）和批判（critique）两种认知模式，比从头写更耗资源。</div>
+      </div>
+      <div class="tip">
+        <div class="tip-label">机制 03</div>
+        <div class="tip-text"><strong>认知恢复期消失</strong>——判断层工作原本穿插着中等强度任务（整理、检索、格式化）作为恢复期。AI 接管这些任务后，工作变成不间断的高强度判断流，没有天然的恢复节点。</div>
+      </div>
+    </div>
+
+    <div class="exec-conclusion">
+      <strong>核心推论：</strong>AI 的放大效果与任务确定性正相关，与任务不确定性负相关。高级知识工作的核心价值恰恰集中在不确定性域——这是 AI 无法替代人的地方，也是专业判断力在 AI 时代最有价值的地方。理解效率放大器，不是为了限制 AI 的使用，而是为了在正确的地方最大化它的价值。
+    </div>
+    </div><!-- /lang-zh -->
+
+    <div class="lang-en">
+
+    <div class="exec-thesis">
+      <div class="exec-thesis-label">Central Argument</div>
+      <div class="exec-thesis-text">AI is a genuine productivity amplifier — but its amplification has a clear prerequisite: <strong>task certainty</strong>. When the path is known and the answer can be defined, AI amplifies execution efficiency. When the path is unknown and exploration and judgement are required, AI accelerates information supply — but the cognitive work of eliminating uncertainty remains human, at the cost of increased cognitive density. <strong>Understanding this certainty boundary is the prerequisite for making AI genuinely work for you.</strong></div>
+    </div>
+
+    <div class="law-mini-grid">
+      <div class="law-mini" style="border-left-color:var(--teal);">
+        <div class="law-mini-tag" style="color:var(--teal);">Execution Layer · High Certainty</div>
+        <div class="law-mini-name">AI as Effective Execution Amplifier</div>
+        <div class="law-mini-desc">Task path is known; the answer can be clearly defined. AI operates highly efficiently in this domain: formatting, drafting, retrieval, code generation, summarising. Cognitive load genuinely decreases; output speed genuinely increases.</div>
+      </div>
+      <div class="law-mini" style="border-left-color:var(--amber);">
+        <div class="law-mini-tag" style="color:var(--amber);">Judgement Layer · High Uncertainty</div>
+        <div class="law-mini-name">AI as Limited Information Accelerator</div>
+        <div class="law-mini-desc">Task path is unknown; RCA, trade-offs, and decisions are required. AI accelerates information supply, but understanding, synthesising, judging — eliminating uncertainty itself — remains human work. Information arrives faster; cognitive density increases accordingly.</div>
+      </div>
+      <div class="law-mini" style="border-left-color:var(--dim);">
+        <div class="law-mini-tag" style="color:var(--dim);">The Boundary Cost</div>
+        <div class="law-mini-name">The Mismatch Happens at the Boundary</div>
+        <div class="law-mini-desc">Organisations calibrate expectations for the judgement layer using execution-layer speed as the benchmark. AI has accelerated information input but not the formation of judgement. This mismatch is the structural reason knowledge workers experience higher cognitive intensity.</div>
+      </div>
+    </div>
+
+    <div class="exec-data-strip">
+      <div class="exec-data-item"><div class="exec-data-num">+14%</div><div class="exec-data-label">More Cognitive Effort</div><div class="exec-data-source">BCG, N=1,488, 2026</div></div>
+      <div class="exec-data-item"><div class="exec-data-num">67%</div><div class="exec-data-label">Working Longer Hours</div><div class="exec-data-source">UC Berkeley, 2026</div></div>
+      <div class="exec-data-item"><div class="exec-data-num">+40%</div><div class="exec-data-label">Speed Baseline Raised</div><div class="exec-data-source">GitLab Survey, 2026</div></div>
+      <div class="exec-data-item"><div class="exec-data-num">26%</div><div class="exec-data-label">Marketing Cognitively Overloaded</div><div class="exec-data-source">BCG Brain Fry, 2026</div></div>
+    </div>
+
+    <hr style="border:none;border-top:1px solid var(--border);margin:28px 0;">
+    <h3 style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber);margin:0 0 16px;">The Amplifier's Working Boundary — The Two-Layer Model in Detail</h3>
+
+    <p class="body-text">AI's amplification effect is not uniformly distributed — it varies along an axis: task certainty. At the two ends of this axis, AI's role and cost are fundamentally different.</p>
+
+    <div class="two-col">
+      <div class="col-block" style="border-color:rgba(34,211,164,0.3);background:rgba(34,211,164,0.04);">
+        <div class="col-block-label known">Execution Layer · High Certainty</div>
+        <div class="col-block-text">
+          <div class="flow-arrow">Path is known; information is sufficient</div>
+          <div class="flow-arrow">→ AI is an effective execution amplifier</div>
+          <div class="flow-arrow">→ Efficiency gains are real; cognitive load decreases</div>
+          <div class="flow-arrow">→ <strong>Delegate fully; review lightly</strong></div>
+        </div>
+      </div>
+      <div class="col-block" style="border-color:rgba(245,158,11,0.3);background:rgba(245,158,11,0.04);">
+        <div class="col-block-label unknown">Judgement Layer · High Uncertainty</div>
+        <div class="col-block-text">
+          <div class="flow-arrow">Path is unknown; exploration and decision required</div>
+          <div class="flow-arrow">→ AI is a limited information accelerator</div>
+          <div class="flow-arrow">→ Information arrives faster; cognitive density increases</div>
+          <div class="flow-arrow">→ <strong>Human leads judgement; AI supports information</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Information vs. Knowledge: Which Step Can the Amplifier Cross?</h3>
+    <p class="body-text">The key to understanding the two-layer structure is distinguishing two concepts: AI provides <strong>information</strong> (data, literature, options, frameworks), while <strong>knowledge</strong> is the product of information processed through judgement, contextualised, and uncertainty-eliminated. The final step from information to knowledge requires human judgement — because that step's prerequisite is knowing what the "right answer" is, which is precisely what is unknown in high-uncertainty contexts.</p>
+    <p class="body-text">AI brings you to the door of knowledge, but pushing the door open is yours to do. It can get you to the door faster — it cannot step through for you. This is why the volume of judgement-layer work does not decrease in the presence of AI — it only becomes more dense.</p>
+
+    <h3>Three Mechanisms of Increasing Cognitive Density</h3>
+    <div class="tips">
+      <div class="tip">
+        <div class="tip-label">Mechanism 01</div>
+        <div class="tip-text"><strong>More information, same amount of judgement</strong> — AI rapidly supplies large volumes of information, but which information is useful, which is not, and how to weight each — these judgements remain human. More information means more judgement work.</div>
+      </div>
+      <div class="tip">
+        <div class="tip-label">Mechanism 02</div>
+        <div class="tip-text"><strong>Execution delegated, responsibility retained</strong> — when AI generates an RCA report or architecture recommendation, reviewing it requires reconstructing — from an external expert's perspective — reasoning the reviewer did not participate in building. Comprehension and critique must be activated simultaneously; this is more cognitively expensive than building from scratch.</div>
+      </div>
+      <div class="tip">
+        <div class="tip-label">Mechanism 03</div>
+        <div class="tip-text"><strong>Cognitive recovery breaks disappear</strong> — judgement-layer work was originally interspersed with medium-intensity tasks (organising, retrieving, formatting) that served as recovery periods. When AI takes over those tasks, work becomes an uninterrupted stream of high-intensity judgement, with no natural recovery nodes.</div>
+      </div>
+    </div>
+
+    <div class="exec-conclusion">
+      <strong>Core Inference:</strong> AI's amplification effect is positively correlated with task certainty and inversely correlated with task uncertainty. The core value of advanced knowledge work is concentrated precisely in the uncertainty domain — where AI cannot substitute for human judgement, and where professional judgement is most valuable in the AI era. Understanding the certainty boundary is not about limiting AI usage — it is about maximising its value in exactly the right places.
+    </div>
+    </div><!-- /lang-en -->
+  </div>
+
+  <hr class="divider">
+
+  <!-- 02 实证研究 -->
+  <div id="sec-evidence" class="section">
+    <h2><span class="sec-num">02</span> <span class="lang-zh">实证数据——认知密度增加的现实证据</span><span class="lang-en">Empirical Evidence — The Reality of Rising Cognitive Density</span></h2>
+
+    <div class="lang-zh">
+    <h3>BCG 研究："AI Brain Fry"，2026 年 3 月</h3>
+    <div class="study-card">
+      <div class="study-meta">BCG Henderson Institute · N = 1,488 · 全行业知识工作者</div>
+      <div class="study-finding">研究区分了两类 AI 使用模式：高 AI <strong>监督负担</strong>（持续检查、审核、纠正 AI 输出）与高 AI <strong>任务委托</strong>（将任务交由 AI 执行、自己轻度介入）。前者相比后者，报告了显著更高的认知消耗：</div>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-block"><div class="stat-num">+14%</div><div class="stat-label">更多脑力消耗</div><div class="stat-context">监督 AI 输出 vs 委托给 AI</div></div>
+      <div class="stat-block"><div class="stat-num">+12%</div><div class="stat-label">更多心理疲劳</div><div class="stat-context">持续审核引发的积累性疲劳</div></div>
+      <div class="stat-block"><div class="stat-num">+19%</div><div class="stat-label">更多信息过载</div><div class="stat-context">需处理的输出量显著扩大</div></div>
+      <div class="stat-block"><div class="stat-num">26%</div><div class="stat-label">营销从业者受影响</div><div class="stat-context">AI 监督最密集岗位，四人中有一人</div></div>
+    </div>
+    <div class="callout"><strong>关键区分：</strong>把工作<strong>委托</strong>给 AI，与<strong>监控和纠正</strong> AI 输出，是两种截然不同的认知模式。后者要求以专家视角持续审核一个自己未参与构建的输出——这与从头思考的过程不同，需要不同的注意力管理策略。</div>
+    <h3>HBR + UC Berkeley · "Workload Creep" 研究，2026 年 2 月</h3>
+    <div class="study-card" style="border-left-color:var(--violet);">
+      <div class="study-meta" style="color:var(--violet);">UC Berkeley 哈斯商学院 · 8 个月纵向定性研究 · N ≈ 200 人科技公司</div>
+      <div class="study-finding">AI 加速了单个任务，但同时<strong>抬高了组织对速度的预期</strong>，使工作者更依赖 AI，进而拓宽工作范围，最终增加工作密度。研究者将此命名为 <strong>"workload creep"（工作量蔓延）</strong>：AI 省下的时间立即被填满了更多工作，而不是留为休息或深度思考。<strong>67% 的 AI 工具采用者</strong>在 2025 年底报告工作时间增加了，而非减少。</div>
+      <div class="study-quote">"What looks like higher productivity in the short run can mask silent workload creep and growing cognitive strain."<cite>— HBR / UC Berkeley, February 2026</cite></div>
+    </div>
+    <h3>Microsoft Research / CHI · 生成式 AI 对批判性思维的影响，2025 年</h3>
+    <div class="study-card" style="border-left-color:var(--teal);">
+      <div class="study-meta" style="color:var(--teal);">Microsoft Research · CHI 2025 · N = 300+ 知识工作者</div>
+      <div class="study-finding">对<strong>高风险任务</strong>（需要准确性的复杂决策），使用 AI 时工作者投入的批判性思维努力实际上<strong>更多</strong>，而非更少——因为他们必须验证 AI 的输出。对<strong>低风险例行任务</strong>，AI 确实减少了认知消耗。结论：<strong>AI 的增效效果仅在任务性质清晰、答案可验证时才成立。</strong>当答案已知，AI 是工具；当答案未知，AI 是另一层需要管理的复杂性，而非解答。</div>
+    </div>
+    <h3>GitLab 开发者调查，2026</h3>
+    <div class="study-card" style="border-left-color:var(--amber);">
+      <div class="study-meta" style="color:var(--amber);">GitLab · 工程团队 AI 编码助手使用数据</div>
+      <div class="study-finding">使用 AI 编码助手的工程团队，<strong>sprint 速度基线在两个季度内被重新校准，上调 40%</strong>。工程师用 AI 变快了，但这个速度立即成为新的"正常"，产出预期永久重置。他们没有更轻松——他们在同样的压力下，跑得更快了。</div>
+    </div>
+    </div><!-- /lang-zh -->
+
+    <div class="lang-en">
+    <h3>BCG Study: "AI Brain Fry," March 2026</h3>
+    <div class="study-card">
+      <div class="study-meta">BCG Henderson Institute · N = 1,488 · Knowledge workers across industries</div>
+      <div class="study-finding">The study distinguishes two AI usage patterns: high AI <strong>supervision burden</strong> (constantly checking, correcting, verifying AI output) vs. high AI <strong>task delegation</strong> (handing tasks to AI with light involvement). The former reports significantly higher cognitive consumption than the latter:</div>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-block"><div class="stat-num">+14%</div><div class="stat-label">More Cognitive Effort</div><div class="stat-context">Supervising AI output vs. delegating to AI</div></div>
+      <div class="stat-block"><div class="stat-num">+12%</div><div class="stat-label">More Mental Fatigue</div><div class="stat-context">Cumulative fatigue from continuous review</div></div>
+      <div class="stat-block"><div class="stat-num">+19%</div><div class="stat-label">More Information Overload</div><div class="stat-context">Volume of output to process significantly expands</div></div>
+      <div class="stat-block"><div class="stat-num">26%</div><div class="stat-label">Marketing Workers Affected</div><div class="stat-context">Highest AI supervision density — one in four</div></div>
+    </div>
+    <div class="callout"><strong>A useful distinction:</strong> <strong>delegating</strong> work to AI and <strong>supervising and correcting</strong> AI output are two very different cognitive modes. The latter requires expert-level scrutiny of an output the worker did not build — which is different from thinking from scratch, and calls for a different attention management strategy.</div>
+    <h3>HBR + UC Berkeley · "Workload Creep" Study, February 2026</h3>
+    <div class="study-card" style="border-left-color:var(--violet);">
+      <div class="study-meta" style="color:var(--violet);">UC Berkeley Haas School · 8-month longitudinal qualitative study · N ≈ 200-person tech company</div>
+      <div class="study-finding">AI accelerated individual tasks but simultaneously <strong>raised organisational speed expectations</strong>, making workers more dependent on AI, broadening work scope, and ultimately increasing work density. Researchers named this <strong>"workload creep"</strong>: time saved by AI is immediately filled with more work, not preserved as rest or deep thinking. <strong>67% of AI tool adopters</strong> reported longer working hours by end of 2025, not shorter.</div>
+      <div class="study-quote">"What looks like higher productivity in the short run can mask silent workload creep and growing cognitive strain."<cite>— HBR / UC Berkeley, February 2026</cite></div>
+    </div>
+    <h3>Microsoft Research / CHI · Impact of Generative AI on Critical Thinking, 2025</h3>
+    <div class="study-card" style="border-left-color:var(--teal);">
+      <div class="study-meta" style="color:var(--teal);">Microsoft Research · CHI 2025 · N = 300+ knowledge workers</div>
+      <div class="study-finding">For <strong>high-stakes tasks</strong> (complex decisions requiring accuracy), workers using AI invest <strong>more</strong> critical thinking effort, not less — because they must verify AI output. For <strong>low-risk routine tasks</strong>, AI does reduce cognitive consumption. Conclusion: <strong>AI's productivity gains only hold when task nature is clear and answers are verifiable.</strong> When the answer is known, AI is a tool; when unknown, AI is another layer of complexity to manage, not a solution.</div>
+    </div>
+    <h3>GitLab Developer Survey, 2026</h3>
+    <div class="study-card" style="border-left-color:var(--amber);">
+      <div class="study-meta" style="color:var(--amber);">GitLab · Engineering team AI coding assistant usage data</div>
+      <div class="study-finding">Engineering teams using AI coding assistants had their <strong>sprint speed baseline recalibrated upward by 40% within two quarters</strong>. Engineers got faster with AI, but that speed immediately became the new "normal" — output expectations were permanently reset. They were not less stressed; they were running faster under the same pressure.</div>
+    </div>
+    </div><!-- /lang-en -->
+  </div>
+
+  <hr class="divider">
+  <div id="sec-jevons" class="section">
+    <h2><span class="sec-num">03</span> <span class="lang-zh">为什么认知密度增加是结构性的——三条历史规律</span><span class="lang-en">Why Rising Cognitive Density Is Structural — Three Historical Patterns</span></h2>
+
+    <div class="lang-zh">
+    <p class="body-text">认知密度的增加不是偶然的——它由三条可以追溯到工业时代的结构性规律驱动。理解这三条规律，有助于识别组织和市场为什么会系统性地校准错误的预期，以及为什么这个现象不会因为"更好地学习使用 AI"而自然消失。</p>
+
+
+    <div class="law-tag">规律 01 · 经济学 · Jevons 1865</div>
+    <p class="body-text">1865 年，英国经济学家 William Stanley Jevons 观察到：瓦特蒸汽机大幅提升了煤的使用效率，但煤炭的总消耗量反而爆炸性增长，而非减少。这就是"Jevons 悖论"（Jevons Paradox）：</p>
+    <div class="callout">效率的提升 → 单位成本下降 → 需求扩张 → 总消耗增加<br>技术进步不减少资源消耗，而是<strong>扩大资源消耗的规模</strong>。</div>
+    <p class="body-text">160 年后，这个悖论正在以"认知资源"（而非煤炭）为对象重演。AI 以"增效"为核心承诺，降低了知识内容的生产成本；成本下降随即带来需求扩张（更多报告、更多分析、更多设计、更快迭代），最终导致知识工作者的总工作量增加，而非减少。</p>
+    <p class="body-text">内容营销团队被要求每月生产的内容量增加了 <strong>3.2 倍</strong>（相比 AI 前基线，Content Marketing Institute 2025）。每当展示"AI 让我 1 天完成了 1 周的工作"，下一个任务清单就会变成 7 倍长。这是一个<strong>结构性规律</strong>，而非个人管理问题——认识到它，可以帮助个人和组织更主动地设定预期。</p>
+    <h3>速度预期的棘轮效应</h3>
+    <p class="body-text">棘轮（Ratchet）只能向前转，不能向后退：</p>
+    <div class="ratchet">
+      <div class="ratchet-step"><div class="ratchet-n">1</div><div class="ratchet-body"><div class="ratchet-title">效率提升</div><div class="ratchet-text">使用 AI，完成任务比以前快</div></div></div>
+      <div class="ratchet-step"><div class="ratchet-n">2</div><div class="ratchet-body"><div class="ratchet-title">基线重置</div><div class="ratchet-text">这个速度成为组织的新预期基线</div></div></div>
+      <div class="ratchet-step"><div class="ratchet-n">3</div><div class="ratchet-body"><div class="ratchet-title">正常化</div><div class="ratchet-text">旧基线被遗忘，新基线被视为"标准"</div></div></div>
+      <div class="ratchet-step"><div class="ratchet-n">4</div><div class="ratchet-body"><div class="ratchet-title">预期重置</div><div class="ratchet-text">必须保持这个速度，否则被视为"产出下降"</div></div></div>
+    </div>
+    <p class="body-text">理解这个棘轮机制，意味着可以更主动地管理"展示速度"的时机——选择何时展示 AI 的加速，而不是让它自动成为新的组织预期。</p>
+
+
+    <div class="law-tag">规律 02 · 认知科学 · Bainbridge 1983</div>
+
+    <p class="body-text">Lisanne Bainbridge 在 1983 年的论文 <em>Ironies of Automation</em> 中提出了一个反直觉的命题：<strong>自动化越复杂，留给人类的任务就越难、越关键，而非更轻松。</strong></p>
+    <p class="body-text">工程师设计自动化系统时，往往把人类视为"不可靠的弱点"，并尽可能排除人的介入。但悖论在于：无法被自动化的任务，恰恰是最需要专家判断的任务——只有机器失效、出现异常时，才需要人来接管。这要求人保持极高的专注度——而这种高度警觉，在系统正常运行、长时间无异常发生的情况下，是人类生理上难以持续维持的。</p>
+
+    <h3>认知恢复期的消失</h3>
+    <p class="body-text">AI 接管了知识工作中的起草、格式化、摘要、翻译、代码生成等任务。这些是认知中等强度但重复性高的任务，在整个工作流中扮演着一个隐性角色：<strong>认知恢复期（cognitive recovery break）</strong>。等报告编译，格式化一张表格，搜索一个文献——这些表面上是"低价值任务"，实际上是大脑在高强度判断之间的喘息空间。</p>
+
+    <div class="callout">
+      AI 压缩了这些任务的时间。认识到认知恢复期的价值，可以帮助知识工作者<strong>有意识地保留某些"慢任务"</strong>——不是因为效率低，而是因为它们是深度判断的准备阶段。
+    </div>
+
+    <h3>AI 留给人的，是最难的那部分</h3>
+    <p class="body-text">以技术架构师的工作场景为例：</p>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>AI 可以做的</th><th>AI 做不了的</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>搜集 RCA 相关文献和历史案例</td><td>理解这个具体系统为什么出了这个具体问题</td></tr>
+        <tr><td>起草 HLD 框架和章节结构</td><td>判断这个架构决策在这个产品语境下是否正确</td></tr>
+        <tr><td>格式化 ADR 文档</td><td>决定这个 trade-off 是否值得，以及理由是什么</td></tr>
+        <tr><td>列出可能的 root cause 清单</td><td>知道哪一个才是真正的根因</td></tr>
+      </tbody>
+    </table>
+
+    <p class="body-text"><strong>AI 加速了认知工作的外壳，但核心判断依然属于人。</strong>对知识工作者而言，价值越来越集中在 AI 无法替代的判断层——这既是挑战，也是专业价值所在。</p>
+
+
+    <div class="law-tag">规律 03 · 技术史</div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">案例 01 · 1900s–1960s</div>
+        <div class="card-title">洗衣机与家务悖论</div>
+        <div class="card-text">历史学家 Ruth Schwartz Cowan（《More Work for Mother》，1983）研究发现：从 1900 年代到 1960 年代，美国女性在家务上花费的时间基本没有减少，甚至增加了。洗衣机出现后，衣物清洗频率从一周一次变成近乎每日。原本由男性、孩子、佣人分担的工作因为"有工具了，一个人就够"全部集中到女主人身上。<strong>工具没有减少工作量，它提高了标准，并消灭了分工。</strong></div>
+      </div>
+      <div class="card">
+        <div class="card-label">案例 02 · 1450s</div>
+        <div class="card-title">古腾堡印刷机</div>
+        <div class="card-text">活字印刷机让书籍生产效率提升约 180 倍。按线性逻辑，抄写员应该消失，书籍总量应维持不变。实际上：书籍总产量爆炸性增长，识字率翻倍，出版业、报业、学术期刊体系全部涌现——整个社会对"写下来"这件事的需求被无限放大。<strong>效率工具创造的不是闲暇，而是新的市场需求，进而是新的劳动需求。</strong></div>
+      </div>
+      <div class="card">
+        <div class="card-label">案例 03 · 1990s–今</div>
+        <div class="card-title">电子邮件与智能手机</div>
+        <div class="card-text">电子邮件被设计为异步通信工具，理应比电话更省时。实际效果：永远在线的预期（always-on culture）成为常态，下班后查邮件成为"敬业"的表现，智能手机将工作时间无限延伸到个人生活。法国因此于 2017 年立法赋予员工"断线权"（Right to Disconnect）。<strong>工具没有缩短工作边界，而是消除了工作与生活之间的边界本身。</strong></div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>三个案例揭示同一个规律：</strong>增效工具提升效率 → 标准随之提升 → 分工消失或集中 → 总工作量增加 → 人被工具重新锁定。增效工具持续<strong>重新定义"足够"的标准</strong>——理解这个规律，有助于更主动地参与设定标准，而不是被动地承接它。
+    </div>
+    </div><!-- /lang-zh -->
+
+    <div class="lang-en">
+    <p class="body-text">The increase in cognitive density is not accidental — it is driven by three structural patterns traceable to the industrial era. Understanding these patterns helps identify why organisations and markets systematically miscalibrate expectations, and why this phenomenon does not naturally disappear with "better learning to use AI."</p>
+
+
+    <div class="law-tag">Pattern 01 · Economics · Jevons 1865</div>
+    <p class="body-text">In 1865, British economist William Stanley Jevons observed that Watt's steam engine dramatically improved coal-use efficiency — yet total coal consumption exploded rather than declined. This is the Jevons Paradox:</p>
+    <div class="callout">Efficiency improves → Unit cost falls → Demand expands → Total consumption increases<br>Technological progress does not reduce resource consumption — it <strong>expands the scale of resource consumption</strong>.</div>
+    <p class="body-text">One hundred and sixty years later, this paradox is repeating itself — with "cognitive resources" instead of coal. AI's core promise is efficiency, which lowered the cost of producing knowledge content. Lower costs immediately brought demand expansion (more reports, more analysis, more design, faster iteration), ultimately increasing knowledge workers' total workload rather than reducing it.</p>
+    <p class="body-text">Content marketing teams were required to produce <strong>3.2× more content</strong> per month compared to pre-AI baselines (Content Marketing Institute, 2025). Every time someone demonstrates "AI let me do a week's work in one day," the next task list becomes seven times longer. This is a <strong>structural pattern</strong>, not a personal management problem — recognising it allows individuals and organisations to set expectations more deliberately.</p>
+    <h3>The Ratchet Effect on Speed Expectations</h3>
+    <p class="body-text">A ratchet only turns forward — it cannot go back:</p>
+    <div class="ratchet">
+      <div class="ratchet-step"><div class="ratchet-n">1</div><div class="ratchet-body"><div class="ratchet-title">Efficiency Gained</div><div class="ratchet-text">AI is used; tasks are completed faster than before</div></div></div>
+      <div class="ratchet-step"><div class="ratchet-n">2</div><div class="ratchet-body"><div class="ratchet-title">Baseline Reset</div><div class="ratchet-text">This speed becomes the organisation's new expected baseline</div></div></div>
+      <div class="ratchet-step"><div class="ratchet-n">3</div><div class="ratchet-body"><div class="ratchet-title">Normalisation</div><div class="ratchet-text">The old baseline is forgotten; the new baseline is treated as "standard"</div></div></div>
+      <div class="ratchet-step"><div class="ratchet-n">4</div><div class="ratchet-body"><div class="ratchet-title">Expectation Reset</div><div class="ratchet-text">The speed must be maintained, or output is perceived as declining</div></div></div>
+    </div>
+    <p class="body-text">Understanding this ratchet means being more deliberate about when to demonstrate AI-driven speed — choosing when to surface it, rather than letting it automatically become the new organisational baseline.</p>
+
+
+    <div class="law-tag">Pattern 02 · Cognitive Science · Bainbridge 1983</div>
+    <p class="body-text">In her 1983 paper <em>Ironies of Automation</em>, Lisanne Bainbridge proposed a counter-intuitive thesis: <strong>the more sophisticated the automation, the harder and more critical the tasks left for humans — not easier.</strong></p>
+    <p class="body-text">Engineers designing automated systems tend to treat humans as "unreliable weaknesses" and try to minimise human involvement. But the paradox is that tasks which cannot be automated are precisely those requiring expert judgement — humans are needed only when machines fail or anomalies occur. This demands extremely high alertness — which, during normal operations when nothing unusual happens for long periods, is physiologically difficult to sustain.</p>
+    <h3>The Disappearance of Cognitive Recovery Breaks</h3>
+    <p class="body-text">AI has taken over drafting, formatting, summarising, translating, and code generation in knowledge work. These are medium-intensity but repetitive tasks that play a hidden role in the workflow: <strong>cognitive recovery breaks</strong>. Waiting for a report to compile, formatting a table, looking up a reference — seemingly "low-value tasks," these are actually breathing room for the brain between high-intensity judgement tasks.</p>
+    <div class="callout">AI compresses the time taken by these tasks. Recognising the value of cognitive recovery breaks allows knowledge workers to <strong>deliberately preserve certain "slower tasks"</strong> — not because they are inefficient, but because they are the preparatory stage for deep judgement.</div>
+    <h3>AI Leaves Humans With the Hardest Part</h3>
+    <p class="body-text">Using a software architect's workflow as an example:</p>
+    <table class="data-table">
+      <thead><tr><th>What AI can do</th><th>What AI cannot do</th></tr></thead>
+      <tbody>
+        <tr><td>Gather RCA-related literature and historical cases</td><td>Understand why this specific system failed in this specific way</td></tr>
+        <tr><td>Draft HLD frameworks and chapter structures</td><td>Judge whether this architecture decision is correct for this product context</td></tr>
+        <tr><td>Format ADR documents</td><td>Decide whether this trade-off is worth making, and why</td></tr>
+        <tr><td>List a set of possible root causes</td><td>Know which one is the actual root cause</td></tr>
+      </tbody>
+    </table>
+    <p class="body-text"><strong>AI has accelerated the shell of cognitive work, but core judgement remains human.</strong> For knowledge workers, professional value is increasingly concentrated at the judgement layer that AI cannot replace — which is both a challenge and an opportunity to demonstrate.</p>
+
+
+    <div class="law-tag">Pattern 03 · Technology History</div>
+    <div class="card-grid">
+      <div class="card"><div class="card-label">Case 01 · 1900s–1960s</div><div class="card-title">The Washing Machine Paradox</div><div class="card-text">Historian Ruth Schwartz Cowan (<em>More Work for Mother</em>, 1983) found that from the 1900s to the 1960s, American women's time spent on housework did not decrease — it increased. After the washing machine appeared, laundry frequency went from once a week to nearly daily. Work previously shared by men, children, and domestic helpers was concentrated on the housewife because "there's a machine now, one person is enough." <strong>Tools did not reduce workload — they raised standards and eliminated division of labour.</strong></div></div>
+      <div class="card"><div class="card-label">Case 02 · 1450s</div><div class="card-title">Gutenberg's Printing Press</div><div class="card-text">The movable-type press raised book production efficiency by roughly 180×. By linear logic, the labour required to produce books should have dropped sharply. What actually happened: total book production exploded, literacy rates doubled, and publishing, journalism, and academic journal systems all emerged — society's demand for "writing things down" was amplified without limit. <strong>Efficiency tools created not leisure, but new market demand, and therefore new labour demand.</strong></div></div>
+      <div class="card"><div class="card-label">Case 03 · 1990s–Present</div><div class="card-title">Email and the Smartphone</div><div class="card-text">Email was designed as an asynchronous communication tool — it should save time compared to phone calls. The actual effect: an always-on culture became the norm; checking email after hours became a sign of dedication; smartphones extended working hours infinitely into personal life. France responded by legislating the "Right to Disconnect" in 2017. <strong>Tools did not shorten work boundaries — they erased the boundary between work and life entirely.</strong></div></div>
+    </div>
+    <div class="callout"><strong>Three cases, one recurring pattern:</strong> Productivity tools raise efficiency → Standards rise accordingly → Division of labour disappears or concentrates → Total workload increases → People are re-locked to the tool. Productivity tools continuously <strong>redefine the standard of "enough"</strong> — understanding this pattern helps individuals and organisations participate more actively in setting that standard, rather than simply absorbing it.</div>
+    </div><!-- /lang-en -->
+  </div>
+
+
+  <hr class="divider">
+
+  <!-- 04 组织视角 -->
+  <div id="sec-org" class="section">
+    <h2><span class="sec-num">04</span> <span class="lang-zh">为什么难以被感知——可见与不可见的落差</span><span class="lang-en">Why It's Hard to See — The Visibility Gap</span></h2>
+
+    
+    <div class="lang-zh">
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">视角 01</div>
+        <div class="card-title">可见与不可见的落差</div>
+        <div class="card-text">"AI 让工程师完成任务快了 55%"——这是数字，可以出现在 KPI 里。认知强度的变化——这是感受，很难被量化。当组织只能看到输出速度，就难以看到认知层面的变化。这是一个值得在团队层面主动讨论的落差，而不是留给个人独自承受的问题。</div>
+      </div>
+      <div class="card">
+        <div class="card-label">视角 02</div>
+        <div class="card-title">组织正在学习的领域</div>
+        <div class="card-text">大多数组织目前仍处于 AI 采用的早期学习阶段：AI 的效率数字容易被看见，认知层面的变化则需要更主动的团队沟通才能浮现。随着 AI 使用成熟，越来越多的组织会开始建立更完整的评估框架——不只是速度，也包括可持续性。</div>
+      </div>
+      <div class="card">
+        <div class="card-label">视角 03</div>
+        <div class="card-title">值得关注的信号</div>
+        <div class="card-text">值得提前关注的信号：决策质量的变化，而不只是决策速度；团队成员的可持续工作状态，而不只是短期产出。<strong>提前建立这些对话，比等到问题累积后再处理要有效得多。</strong></div>
+      </div>
+    </div>
+    <div class="study-quote" style="border-left-color:var(--amber);color:var(--dim);">
+      "People were using the tool and getting a lot more done, but also feeling like they were reaching the limits of their brain power... Things were moving too fast, and they didn't have the cognitive ability to process all the information and make all the decisions."
+      <cite style="color:var(--muted);">— Julie Bedard, BCG Managing Director, Fortune, March 2026</cite>
+    </div>
+    </div><!-- /lang-zh -->
+    <div class="lang-en">
+    <div class="card-grid">
+      <div class="card"><div class="card-label">Perspective 01</div><div class="card-title">The Visibility Gap</div><div class="card-text">"AI made our engineers 55% faster" — this is a number that appears in KPIs. Changes in cognitive intensity — these are harder to quantify. When organisations can only see output speed, changes at the cognitive level become difficult to perceive. This is a gap worth surfacing and discussing at the team level, rather than leaving individuals to absorb alone.</div></div>
+      <div class="card"><div class="card-label">Perspective 02</div><div class="card-title">An Emerging Area of Organisational Learning</div><div class="card-text">Most organisations are still in an early learning phase of AI adoption: AI's efficiency numbers are easy to see; changes at the cognitive level require more proactive team communication to surface. As AI usage matures, more organisations will begin building more complete evaluation frameworks — covering not just speed, but sustainability.</div></div>
+      <div class="card"><div class="card-label">Perspective 03</div><div class="card-title">Signals Worth Watching</div><div class="card-text">Signals worth watching proactively: changes in decision quality, not just decision speed; the sustainable working state of team members, not just short-term output. <strong>Creating these conversations early is far more effective than addressing accumulated problems after the fact.</strong></div></div>
+    </div>
+    <div class="study-quote" style="border-left-color:var(--amber);color:var(--dim);">"People were using the tool and getting a lot more done, but also feeling like they were reaching the limits of their brain power... Things were moving too fast, and they didn't have the cognitive ability to process all the information and make all the decisions."<cite style="color:var(--muted);">— Julie Bedard, BCG Managing Director, Fortune, March 2026</cite></div>
+    </div><!-- /lang-en -->
+  </div>
+
+  <!-- 05 策略 -->
+  <div id="sec-strategy" class="section">
+    <h2><span class="sec-num">05</span> <span class="lang-zh">策略——让放大器在正确的地方工作</span><span class="lang-en">Strategy — Deploying the Amplifier Where It Works</span></h2>
+
+    <div class="lang-zh">
+    <p class="body-text">理解放大器的工作原理，比任何具体的 AI 使用技巧都更根本。策略的核心是：<strong>在执行层充分授权，在判断层保持主导，并学会在判断层中识别和 delegate 可确定的子任务。</strong></p>
+
+    <h3>第一层策略：按任务类型区分 AI 的角色</h3>
+    <div class="strategy-row-header"><div>任务类型</div><div>特征</div><div>AI 策略</div></div>
+    <div class="strategy-grid">
+      <div class="strategy-row">
+        <div class="strategy-type">执行性</div>
+        <div class="strategy-what">格式化、起草模板、代码脚手架、摘要、翻译</div>
+        <div class="strategy-how">充分使用 AI，接受输出，只做轻度审核。答案可验证，风险有限。</div>
+      </div>
+      <div class="strategy-row">
+        <div class="strategy-type">探索性</div>
+        <div class="strategy-what">RCA、架构决策、trade-off 分析、系统设计</div>
+        <div class="strategy-how">先用自己的判断勾勒问题形状，再用 AI 补充信息。顺序颠倒，就是让 AI 的框架先占领思维空间。</div>
+      </div>
+      <div class="strategy-row">
+        <div class="strategy-type">判断性</div>
+        <div class="strategy-what">批准、拒绝、方向决策、架构权衡</div>
+        <div class="strategy-how">AI 不介入决策本身，仅用于整理支撑证据。决策的理由必须是自己的。</div>
+      </div>
+    </div>
+
+    <h3>第二层策略：在判断层，如何有效 delegate 给 AI</h3>
+    <p class="body-text">判断层的工作不能整体 delegate，但可以被拆解——其中有部分子任务是可确定的，可以交给 AI。以下六种方法，是在不确定性域内有效使用 AI 的核心技法。</p>
+
+    <div class="truth-list">
+      <div class="truth-card">
+        <div class="truth-n">1</div>
+        <div class="truth-body">
+          <div class="truth-title">问题分解——只 delegate 可确定的子问题</div>
+          <div class="truth-text">先手动把复杂问题拆开：哪些子问题路径清晰（执行层），哪些需要判断（判断层）。把执行层子问题全部交给 AI，把认知资源集中到判断层核心。以 RCA 为例："整理历史故障日志、列出候选原因"是执行层；"哪个才是真正的根因、为什么"是判断层。前者 delegate，后者留给自己。</div>
+        </div>
+      </div>
+      <div class="truth-card">
+        <div class="truth-n">2</div>
+        <div class="truth-body">
+          <div class="truth-title">反转提问方向——让 AI 帮你提问，而不是帮你回答</div>
+          <div class="truth-text">把 prompting 方向反转：不是"这个问题的根因是什么？"，而是"要确定这个问题的根因，我需要回答哪些关键问题？"AI 帮你构建判断的脚手架，但判断本身还是你的。这让 AI 结构化你的不确定性，而不是替你消除不确定性。</div>
+        </div>
+      </div>
+      <div class="truth-card">
+        <div class="truth-n">3</div>
+        <div class="truth-body">
+          <div class="truth-title">假设-证据分离——生成交给 AI，评估由人来</div>
+          <div class="truth-text">把探索过程拆成两步：①让 AI 生成所有可能的假设/选项/候选原因（在已知框架内枚举，AI 擅长）；②针对每个假设，由人判断哪些证据支持、哪些反驳、权重如何。这把"消除不确定性"拆解成 AI 可以参与的部分和必须人来的部分。</div>
+        </div>
+      </div>
+      <div class="truth-card">
+        <div class="truth-n">4</div>
+        <div class="truth-body">
+          <div class="truth-title">信息空间压缩——给 AI 你的筛选标准，不给它决策权</div>
+          <div class="truth-text">不是"告诉我哪个方案最好"，而是"按照[标准A、B、C]，把这20个候选方案缩减到5个最相关的，并标出每个的关键不确定性"。你给出筛选标准（判断），AI 执行筛选（执行）。信息量从20降到5，最终判断仍是你的。</div>
+        </div>
+      </div>
+      <div class="truth-card">
+        <div class="truth-n">5</div>
+        <div class="truth-body">
+          <div class="truth-title">认知外骨骼——delegate 记忆和整理，保留推理</div>
+          <div class="truth-text">在探索过程中，让 AI 实时记录你的推理过程："我目前的判断是X，依据是Y，还不确定Z。"让 AI 整理成结构化笔记。这 delegate 的是记忆和整理（执行层），解放了工作记忆，让你把认知资源集中在推理本身（判断层）。</div>
+        </div>
+      </div>
+      <div class="truth-card">
+        <div class="truth-n">6</div>
+        <div class="truth-body">
+          <div class="truth-title">用 AI 做反驳者——验证你的判断，不是替代它</div>
+          <div class="truth-text">一旦有了初步判断，让 AI 扮演反对者："我认为根因是X，请帮我找出支持这个判断的最强反驳证据。"这把验证过程变成人机协作——AI 提供反驳信息，人判断反驳是否成立。判断始终在人这里，但验证成本大幅降低。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>六种方法的共同原则：</strong>在不确定性任务中，把 AI 从"答案提供者"变成"问题结构化工具"——让 AI 帮你把不确定性变得更精确、更有边界，但消除不确定性的最后一步，始终由人的判断完成。
+    </div>
+
+    <h3>第三层策略：管理速度预期与认知恢复</h3>
+    <div class="tips">
+      <div class="tip">
+        <div class="tip-label">速度预期</div>
+        <div class="tip-text">不要主动展示 AI 加速了多少。一旦展示，这成为新基线。高级知识工作的价值应以<strong>决策质量</strong>为度量，而非输出速度。</div>
+      </div>
+      <div class="tip">
+        <div class="tip-label">认知恢复</div>
+        <div class="tip-text">有意识地保留"慢任务"——手写笔记、步行思考、不用 AI 的简短写作。这是大脑整合信息、形成洞见的必要时间窗口，不是低效。</div>
+      </div>
+      <div class="tip">
+        <div class="tip-label">命名现象</div>
+        <div class="tip-text">能够命名正在发生的结构性变化——"这是 workload creep，不是我的能力问题"——就能从被动承受者变成主动的策略制定者。可用框架：Jevons 悖论、workload creep、Bainbridge 效应、认知密度。</div>
+      </div>
+    </div>
+    </div><!-- /lang-zh -->
+
+    <div class="lang-en">
+    <p class="body-text">Understanding the amplifier's working principles is more fundamental than any specific AI technique. The core of the strategy: <strong>delegate fully at the execution layer, maintain leadership at the judgement layer, and learn to identify and delegate the certain sub-tasks within judgement-layer work.</strong></p>
+
+    <h3>Layer One: Distinguish AI's Role by Task Type</h3>
+    <div class="strategy-row-header"><div>Task Type</div><div>Characteristics</div><div>AI Strategy</div></div>
+    <div class="strategy-grid">
+      <div class="strategy-row"><div class="strategy-type">Executional</div><div class="strategy-what">Formatting, template drafting, code scaffolding, summarising, translating</div><div class="strategy-how">Use AI fully; accept output with light review. Answers are verifiable; risk is bounded.</div></div>
+      <div class="strategy-row"><div class="strategy-type">Exploratory</div><div class="strategy-what">RCA, architecture decisions, trade-off analysis, system design</div><div class="strategy-how">Sketch the shape of the problem with your own judgement first, then use AI to fill in information. Reversing this order means letting AI's framework occupy your thinking space first.</div></div>
+      <div class="strategy-row"><div class="strategy-type">Judgement</div><div class="strategy-what">Approvals, rejections, direction decisions, architecture trade-offs</div><div class="strategy-how">AI does not enter the decision itself — only used to organise supporting evidence. The reasoning behind the decision must be one's own.</div></div>
+    </div>
+
+    <h3>Layer Two: How to Effectively Delegate to AI at the Judgement Layer</h3>
+    <p class="body-text">Judgement-layer work cannot be delegated wholesale — but it can be decomposed. Within it, some sub-tasks are certain and can be handed to AI. The following six methods are the core techniques for effectively using AI within the uncertainty domain.</p>
+
+    <div class="truth-list">
+      <div class="truth-card">
+        <div class="truth-n">1</div>
+        <div class="truth-body">
+          <div class="truth-title">Problem Decomposition — Delegate Only the Certain Sub-Problems</div>
+          <div class="truth-text">Manually decompose the complex problem first: which sub-problems have a clear path (execution layer), which require judgement (judgement layer). Delegate execution-layer sub-problems fully to AI; concentrate cognitive resources on the judgement-layer core. In RCA: "compile historical fault logs, list candidate causes" is execution layer; "which is the actual root cause, and why" is judgement layer. Delegate the former; keep the latter.</div>
+        </div>
+      </div>
+      <div class="truth-card">
+        <div class="truth-n">2</div>
+        <div class="truth-body">
+          <div class="truth-title">Reverse the Prompting Direction — Ask AI to Generate Questions, Not Answers</div>
+          <div class="truth-text">Invert the prompting direction: not "what is the root cause of this problem?" but "what are the key questions I need to answer to identify the root cause?" AI helps structure the scaffold for your judgement, but the judgement remains yours. This makes AI structure your uncertainty, rather than eliminating it for you.</div>
+        </div>
+      </div>
+      <div class="truth-card">
+        <div class="truth-n">3</div>
+        <div class="truth-body">
+          <div class="truth-title">Hypothesis-Evidence Separation — Generation to AI, Evaluation to Human</div>
+          <div class="truth-text">Split the exploration into two steps: ① have AI generate all possible hypotheses/options/candidate causes (enumerating within known frameworks — AI excels here); ② for each hypothesis, human judges which evidence supports it, which refutes it, and the relative weight. This decomposes "eliminating uncertainty" into the part AI can participate in and the part that must be human.</div>
+        </div>
+      </div>
+      <div class="truth-card">
+        <div class="truth-n">4</div>
+        <div class="truth-body">
+          <div class="truth-title">Information Space Compression — Give AI Your Filtering Criteria, Not Decision Authority</div>
+          <div class="truth-text">Not "tell me which option is best" but "using criteria A, B, and C, reduce these 20 candidate options to the 5 most relevant, and flag the key uncertainty in each." You provide the filtering criteria (judgement); AI executes the filter (execution). Information volume drops from 20 to 5; the final judgement remains yours.</div>
+        </div>
+      </div>
+      <div class="truth-card">
+        <div class="truth-n">5</div>
+        <div class="truth-body">
+          <div class="truth-title">Cognitive Exoskeleton — Delegate Memory and Organisation, Retain Reasoning</div>
+          <div class="truth-text">During exploration, have AI continuously document your reasoning: "my current judgement is X, based on Y; still uncertain about Z." Have AI organise this into structured notes. This delegates memory and organisation (execution layer), freeing working memory so cognitive resources can concentrate on the reasoning itself (judgement layer).</div>
+        </div>
+      </div>
+      <div class="truth-card">
+        <div class="truth-n">6</div>
+        <div class="truth-body">
+          <div class="truth-title">Use AI as Devil's Advocate — Validate Your Judgement, Not Replace It</div>
+          <div class="truth-text">Once you have an initial judgement, have AI play the opposing role: "I believe the root cause is X — please find the strongest evidence against this." This transforms the verification process into human-AI collaboration: AI provides counter-evidence; human judges whether the counter-argument holds. Judgement stays with the human; verification cost drops significantly.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>The shared principle across all six methods:</strong> In uncertainty-domain tasks, transform AI from an "answer provider" into a "problem structuring tool" — use AI to make uncertainty more precise and bounded, but the final step of eliminating uncertainty always belongs to human judgement.
+    </div>
+
+    <h3>Layer Three: Managing Speed Expectations and Cognitive Recovery</h3>
+    <div class="tips">
+      <div class="tip"><div class="tip-label">Speed Expectations</div><div class="tip-text">Do not proactively show stakeholders how much AI has accelerated your work. Once shown, it becomes the new baseline. Advanced knowledge work should be measured by <strong>decision quality</strong>, not output speed.</div></div>
+      <div class="tip"><div class="tip-label">Cognitive Recovery</div><div class="tip-text">Deliberately preserve "slow tasks" — handwritten notes, thinking during a walk, short writing without AI. These are the necessary time windows for the brain to integrate information and form insight. They are not inefficiency.</div></div>
+      <div class="tip"><div class="tip-label">Naming the Pattern</div><div class="tip-text">Being able to name what is structurally happening — "this is workload creep, not a capability problem" — transforms a passive absorber into an active strategist. Available frameworks: Jevons Paradox, workload creep, Bainbridge Effect, cognitive density.</div></div>
+    </div>
+    </div><!-- /lang-en -->
+  </div>
+  <!-- 10 结语 -->
+  <div id="sec-conclusion" class="section">
+    <h2><span class="sec-num">06</span> <span class="lang-zh">结语——理解放大器，用好放大器</span><span class="lang-en">Conclusion — Understand the Amplifier, Use It Well</span></h2>
+
+    <div class="lang-zh">
+    <p class="body-text">AI 是真实的效率放大器。这不是一个需要被质疑的前提，而是一个需要被精确理解的事实。放大器不会均匀地放大一切——它沿着确定性轴工作：在执行层，它是强大的工具；在判断层，它是有限的信息加速器，判断的重量依然由人承担。</p>
+    <p class="body-text">感到在更高强度地使用脑力，不是因为 AI 没有用，而是因为 AI 的使用边界和使用方式尚未被精确地对齐。当组织按照执行层的速度来期待判断层的产出，当个人没有意识到判断层的工作需要不同的 AI 协作模式，认知密度的增加是结构性的必然，而不是个人的失败。</p>
+
+    <div class="tips">
+      <div class="tip">
+        <div class="tip-label">放大器的工作原理</div>
+        <div class="tip-text">确定性越高，放大效果越好。执行层充分 delegate；判断层保持主导，用六种方法拆解和 delegate 其中的可确定部分。</div>
+      </div>
+      <div class="tip">
+        <div class="tip-label">三条历史规律</div>
+        <div class="tip-text">Jevons 悖论、Bainbridge 效应、技术史铁律——解释了为什么组织和市场会系统性地误读放大器的使用边界，以及为什么认知密度的增加在当前是结构性的。</div>
+      </div>
+      <div class="tip">
+        <div class="tip-label">判断力的价值</div>
+        <div class="tip-text">放大器越强大，它所依赖的人类输入——判断力——就越珍贵。AI 时代不是判断力贬值的时代，而是判断力的市场价值进一步凸显的时代。</div>
+      </div>
+      <div class="tip">
+        <div class="tip-label">使用边界的清醒</div>
+        <div class="tip-text">最有效的 AI 使用者，不是使用 AI 最多的人，而是对放大器的工作原理理解最清楚的人——知道在哪里最大化它的价值，在哪里保持人的主导。</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      理解放大器的工作原理和使用边界，是让 AI 真正为知识工作者服务的前提，而不是让知识工作者成为 AI 工作流的一个环节。<br><br>
+      <strong>这份分析的目的，正是提供这种清醒。</strong>
+    </div>
+    </div><!-- /lang-zh -->
+
+    <div class="lang-en">
+    <p class="body-text">AI is a genuine productivity amplifier. This is not a premise to be questioned — it is a fact to be understood precisely. An amplifier does not uniformly amplify everything — it works along the certainty axis: at the execution layer, it is a powerful tool; at the judgement layer, it is a limited information accelerator, and the weight of judgement remains human.</p>
+    <p class="body-text">Working at higher cognitive intensity is not because AI is unhelpful — it is because AI's usage boundary and usage approach have not yet been precisely aligned. When organisations calibrate judgement-layer expectations using execution-layer speed as the benchmark, and when individuals have not recognised that judgement-layer work requires a different mode of AI collaboration, rising cognitive density is a structural inevitability, not a personal failure.</p>
+
+    <div class="tips">
+      <div class="tip"><div class="tip-label">The Amplifier's Working Principles</div><div class="tip-text">The higher the certainty, the better the amplification. Delegate fully at the execution layer; maintain leadership at the judgement layer, using the six methods to decompose and delegate the certain sub-components within it.</div></div>
+      <div class="tip"><div class="tip-label">Three Historical Patterns</div><div class="tip-text">The Jevons Paradox, the Bainbridge Effect, and the recurring historical pattern — these explain why organisations and markets systematically misread the usage boundary of the amplifier, and why rising cognitive density is currently structural.</div></div>
+      <div class="tip"><div class="tip-label">The Value of Judgement</div><div class="tip-text">The more powerful the amplifier, the more valuable the human input it depends on — judgement. The AI era is not an era of declining judgement value; it is an era in which the market value of professional judgement becomes more pronounced.</div></div>
+      <div class="tip"><div class="tip-label">Clarity on the Boundary</div><div class="tip-text">The most effective AI users are not those who use AI most — they are those who understand the amplifier's working principles most clearly: knowing where to maximise its value, and where to maintain human leadership.</div></div>
+    </div>
+
+    <div class="callout">
+      Understanding the amplifier's working principles and usage boundaries is the prerequisite for making AI genuinely serve knowledge workers — rather than making knowledge workers a component in the AI workflow.<br><br>
+      <strong>That clarity is what this analysis is for.</strong>
+    </div>
+    </div><!-- /lang-en -->
+  </div>
+  <!-- 11 参考文献 -->
+  <div id="sec-references" class="section">
+    <h2><span class="sec-num">07</span> <span class="lang-zh">核心参考文献</span><span class="lang-en">Key References</span></h2>
+
+    
+    <div class="lang-zh">
+<table class="ref-table">
+      <thead>
+        <tr><th>来源</th><th>核心洞见</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Bedard et al. (BCG)<br>HBR, 2026</td>
+          <td>AI 监督负担导致 14% 更多脑力消耗、12% 更多心理疲劳、19% 更多信息过载；"AI Brain Fry" 现象，14% 用户受影响，营销岗位达 26%</td>
+        </tr>
+        <tr>
+          <td>Ranganathan &amp; Ye<br>UC Berkeley, 2026</td>
+          <td>8 个月纵向研究：AI 加速任务 → 组织期望抬高 → workload creep → 67% 工作者工时增加，而非减少</td>
+        </tr>
+        <tr>
+          <td>Microsoft Research<br>CHI 2025</td>
+          <td>高风险任务中 AI 用户批判性思维投入更高，而非更低；AI 增效效果仅在低风险可验证任务中成立</td>
+        </tr>
+        <tr>
+          <td>Bainbridge, Lisanne<br>Automatica, 1983</td>
+          <td>"Ironies of Automation"：自动化越复杂，人类任务越难；消灭了认知恢复期；人类无法长时间维持对稀少事件的高度警觉</td>
+        </tr>
+        <tr>
+          <td>Jevons, William Stanley<br>The Coal Question, 1865</td>
+          <td>Jevons Paradox：效率提升 → 单位成本下降 → 需求扩张 → 总消耗增加，而非减少</td>
+        </tr>
+        <tr>
+          <td>Cowan, Ruth Schwartz<br>More Work for Mother, 1983</td>
+          <td>家用电器未减少家务时间；技术提高标准、集中劳动、消灭分工，总劳动量不降反升</td>
+        </tr>
+        <tr>
+          <td>Marx, Karl<br>Grundrisse / Capital, 1858/1867</td>
+          <td>人与工具：工具逻辑反过来支配人，工人成为机器的有意识肢体；Lukács 主客关系的演变理论的认知版本</td>
+        </tr>
+        <tr>
+          <td>GitLab Developer Survey<br>2026</td>
+          <td>AI 编程助手导致工程团队 sprint 速度基线上调 40%，在两个季度内完成重置</td>
+        </tr>
+        <tr>
+          <td>TechCrunch / HBR<br>February 2026</td>
+          <td>"最早拥抱 AI 的人，最先显示出 burnout 的迹象"；workload creep 掩盖了可持续性风险</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="lang-en">
+    <table class="ref-table">
+      <thead><tr><th>Source</th><th>Core Claim</th></tr></thead>
+      <tbody>
+        <tr><td>Bedard et al. (BCG)<br>HBR, 2026</td><td>AI supervision burden causes 14% more cognitive effort, 12% more mental fatigue, 19% more information overload; "AI Brain Fry" affects 14% of users, rising to 26% in marketing roles</td></tr>
+        <tr><td>Ranganathan &amp; Ye<br>UC Berkeley, 2026</td><td>8-month longitudinal study: AI accelerates tasks → raised org expectations → workload creep → 67% of workers report longer working hours, not shorter</td></tr>
+        <tr><td>Microsoft Research<br>CHI 2025</td><td>AI users invest more critical thinking on high-stakes tasks, not less; AI's productivity gains only hold for low-risk, verifiable tasks</td></tr>
+        <tr><td>Bainbridge, Lisanne<br>Automatica, 1983</td><td>"Ironies of Automation": the more complex the automation, the harder the human tasks; cognitive recovery breaks eliminated; humans cannot maintain sustained vigilance for rare events</td></tr>
+        <tr><td>Jevons, William Stanley<br>The Coal Question, 1865</td><td>Jevons Paradox: efficiency improves → unit cost falls → demand expands → total consumption increases, not decreases</td></tr>
+        <tr><td>Cowan, Ruth Schwartz<br>More Work for Mother, 1983</td><td>Household technology did not reduce housework time; tools raise standards, concentrate labour, eliminate division of work — total labour increases</td></tr>
+        <tr><td>Marx, Karl<br>Grundrisse / Capital, 1858/1867</td><td>Tool alienation and reification: how tools can come to shape the logic of work; the evolving relationship between people and tool systems; applied to cognitive work in the AI era</td></tr>
+        <tr><td>GitLab Developer Survey<br>2026</td><td>AI coding assistants caused engineering teams' sprint speed baseline to be raised by 40%, recalibrated within two quarters</td></tr>
+        <tr><td>TechCrunch / HBR<br>February 2026</td><td>"The earliest AI adopters are showing the earliest signs of burnout"; workload creep masks sustainability risks</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 12 Change History -->
+  <div id="sec-change-history" class="section">
+    <h2><span class="sec-num">08</span> Change History</h2>
+    <div class="lang-zh">
+    <table class="change-table">
+      <thead><tr><th>Version</th><th>Author</th><th>Changes</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>v2026.5.17</td>
+          <td>Ben Luo</td>
+          <td>重构版本。核心框架从"AI 增效悖论"转向"AI 作为效率放大器"：放大效果以任务确定性为前提；执行层 AI 高效；判断层 AI 仅加速信息，认知密度增加。结构精简为八节，新增判断层有效 delegate 六种方法。中英文同步。</td>
+        </tr>
+        <tr>
+          <td>v2026.5.16</td>
+          <td>Claude</td>
+          <td>初稿。以"AI 增效悖论"为核心框架，覆盖实证研究、三条历史规律、认知机制、组织视角、六条原则及策略。</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="lang-en">
+    <table class="change-table">
+      <thead><tr><th>Version</th><th>Author</th><th>Changes</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>v2026.5.17</td>
+          <td>Ben Luo</td>
+          <td>Major revision. Framework shifted from "AI Intensification Paradox" to "AI as Productivity Amplifier": amplification is conditioned on task certainty; execution layer AI is effective; judgement layer AI accelerates information only, at the cost of cognitive density. Structure condensed to eight sections; six delegation methods for the judgement layer added. Bilingual.</td>
+        </tr>
+        <tr>
+          <td>v2026.5.16</td>
+          <td>Claude</td>
+          <td>Initial draft. Built around the AI Intensification Paradox framework, covering empirical research, three historical patterns, cognitive mechanisms, organisational perspective, six principles, and strategy.</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <p class="footer-note"><span class="lang-zh">AI 作为效率放大器 · 工作原理与使用边界</span><span class="lang-en">AI as Productivity Amplifier · Working Principles and Usage Boundaries</span></p>
+
+</main>
+
+<script>
+// ── Language toggle ──
+function toggleLang() {
+  const isEn = document.body.classList.toggle('en');
+  document.getElementById('lang-btn').textContent = isEn ? '中文' : 'ENG';
+  localStorage.setItem('ai-report-lang', isEn ? 'en' : 'zh');
+}
+
+// ── Theme toggle ──
+function toggleTheme() {
+  const isLight = document.body.classList.toggle('light');
+  document.getElementById('toggle-btn').textContent = isLight ? '🌙' : '☀';
+  localStorage.setItem('ai-report-theme', isLight ? 'light' : 'dark');
+}
+
+// ── Scroll-spy navigation ──
+const sectionIds = ['sec-thesis','sec-evidence','sec-jevons','sec-org','sec-strategy','sec-conclusion','sec-references','sec-change-history'];
+
+function goTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function updateActiveNav() {
+  let current = sectionIds[0];
+  sectionIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top <= 80) current = id;
+  });
+  document.querySelectorAll('.nav-item').forEach((item, i) => {
+    item.classList.toggle('active', sectionIds[i] === current);
+  });
+}
+
+window.addEventListener('scroll', updateActiveNav, { passive: true });
+updateActiveNav();
+
+// ── Load saved theme & language ──
+(function () {
+  const savedTheme = localStorage.getItem('ai-report-theme');
+  if (savedTheme === 'light') {
+    document.body.classList.add('light');
+    document.getElementById('toggle-btn').textContent = '🌙';
+  }
+  const savedLang = localStorage.getItem('ai-report-lang');
+  if (savedLang === 'en') {
+    document.body.classList.add('en');
+    document.getElementById('lang-btn').textContent = '中文';
+  }
+})();
+</script>
+</body>
+</html>

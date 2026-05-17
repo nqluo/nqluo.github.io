@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>nqluo · Writing</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --bg:           #06080e;
+  --bg2:          #0c1119;
+  --surface:      #0d1120;
+  --surface2:     #111827;
+  --border:       #1c2b3e;
+  --border2:      #243347;
+  --teal:         #22d3a4;
+  --teal-dim:     rgba(34,211,164,0.10);
+  --amber:        #f59e0b;
+  --text:         #dde5f0;
+  --dim:          #8aa0b8;
+  --muted:        #445870;
+  --white:        #ffffff;
+  --topbar-bg:    rgba(6,8,14,0.97);
+  --topbar-border:#1c2b3e;
+  --card-bg:      #0d1120;
+  --card-border:  #1c2b3e;
+  --ver-color:    #22d3a4;
+  --ver-bg:       rgba(34,211,164,0.06);
+  --ver-border:   rgba(34,211,164,0.20);
+  --footer-color: #1c2b3e;
+}
+
+body.light {
+  --bg:           #f4f1ec;
+  --bg2:          #ece8e0;
+  --surface:      #faf7f2;
+  --surface2:     #f2ede4;
+  --border:       #d4ccc0;
+  --border2:      #c8bfb0;
+  --teal:         #0e7a5a;
+  --teal-dim:     rgba(14,122,90,0.08);
+  --amber:        #b45309;
+  --text:         #1a1e2e;
+  --dim:          #5a6880;
+  --muted:        #8a96a8;
+  --topbar-bg:    #1a1e2e;
+  --topbar-border:#252a3a;
+  --card-bg:      #faf7f2;
+  --card-border:  #d4ccc0;
+  --ver-color:    #0e7a5a;
+  --ver-bg:       rgba(14,122,90,0.07);
+  --ver-border:   rgba(14,122,90,0.25);
+  --footer-color: #c8bfb0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Lora', Georgia, serif;
+  font-size: 15px;
+  line-height: 1.8;
+  min-height: 100vh;
+  transition: background 0.25s, color 0.25s;
+}
+
+body:not(.light)::before {
+  content: '';
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px);
+  pointer-events: none; z-index: 9999;
+}
+
+/* ── Topbar ── */
+.topbar {
+  position: fixed; top:0; left:0; right:0; height:52px;
+  background: var(--topbar-bg);
+  border-bottom: 1px solid var(--topbar-border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 28px;
+  z-index: 200;
+  backdrop-filter: blur(8px);
+}
+.topbar-left  { display:flex; align-items:center; gap:12px; }
+.topbar-right { display:flex; align-items:center; gap:10px; }
+
+.pulse-dot {
+  width:7px; height:7px; border-radius:50%;
+  background: var(--teal); box-shadow: 0 0 6px var(--teal);
+  animation: pulse 2.4s ease-in-out infinite; flex-shrink:0;
+}
+@keyframes pulse { 0%,100%{opacity:1;box-shadow:0 0 6px var(--teal)}50%{opacity:.35;box-shadow:0 0 2px var(--teal)} }
+
+.topbar-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.05rem; font-weight: 600;
+  color: var(--white);
+  letter-spacing: 0.01em;
+}
+body.light .topbar-name { color: #f0f4ff; }
+
+.topbar-subtitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--teal); opacity: 0.85;
+}
+
+.version-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.12em;
+  color: var(--ver-color);
+  background: var(--ver-bg);
+  border: 1px solid var(--ver-border);
+  padding: 3px 10px;
+}
+
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  width: 28px; height: 28px;
+  border-radius: 4px; cursor: pointer;
+  font-size: 13px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.theme-toggle:hover { border-color: var(--teal); color: var(--teal); }
+
+.lang-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  height: 28px; padding: 0 9px;
+  border-radius: 4px; cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.08em;
+  display: flex; align-items: center;
+  transition: all 0.2s;
+}
+.lang-toggle:hover { border-color: var(--teal); color: var(--teal); }
+
+/* ── Main content ── */
+.main {
+  padding: 100px 52px 80px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+@media (max-width: 640px) {
+  .main { padding: 80px 20px 48px; }
+}
+
+/* ── Page header ── */
+.kicker {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--teal); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.kicker::after { content:''; flex:1; height:1px; background:var(--border); }
+
+h1 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300; line-height: 1.2;
+  color: var(--white); margin-bottom: 12px; letter-spacing: -0.01em;
+}
+body.light h1 { color: var(--text); }
+
+.subtitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 40px;
+}
+
+.divider { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+/* ── Writing cards ── */
+.writing-list { display: flex; flex-direction: column; gap: 14px; margin-top: 8px; }
+
+.writing-card {
+  display: block;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  padding: 22px 24px;
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.writing-card::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--teal);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.writing-card:hover { border-color: var(--border2); background: var(--surface2); }
+.writing-card:hover::before { opacity: 1; }
+
+.writing-card-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--teal); margin-bottom: 8px; opacity: 0.8;
+}
+.writing-card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem; font-weight: 600;
+  color: var(--text); margin-bottom: 6px; line-height: 1.3;
+}
+.writing-card-desc { font-size: 13px; line-height: 1.7; color: var(--dim); }
+
+.writing-card-arrow {
+  position: absolute; right: 22px; top: 50%; transform: translateY(-50%);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px; color: var(--border2);
+  transition: color 0.2s, right 0.2s;
+}
+.writing-card:hover .writing-card-arrow { color: var(--teal); right: 18px; }
+
+/* ── Footer ── */
+.footer-note {
+  text-align: center; font-size: 11px; color: var(--footer-color);
+  font-family: 'JetBrains Mono', monospace; letter-spacing: 0.1em; margin-top: 56px;
+}
+
+/* ── Language switching ── */
+.lang-en { display: none; }
+body.en .lang-zh { display: none; }
+body.en .lang-en { display: block; }
+span.lang-en { display: none; }
+body.en span.lang-zh { display: none; }
+body.en span.lang-en { display: inline; }
+</style>
+</head>
+<body>
+
+<!-- ── Topbar ── -->
+<header class="topbar">
+  <div class="topbar-left">
+    <span class="pulse-dot"></span>
+    <span class="topbar-name">Ben Luo</span>
+    <span class="topbar-subtitle"><span class="lang-zh">写作 · Writing</span><span class="lang-en">Writing</span></span>
+  </div>
+  <div class="topbar-right">
+    <span class="version-badge">v2026.5.17</span>
+    <button class="lang-toggle" onclick="toggleLang()" id="lang-btn" title="切换语言 / Switch language">ENG</button>
+    <button class="theme-toggle" onclick="toggleTheme()" id="toggle-btn" title="Toggle light/dark">☀</button>
+  </div>
+</header>
+
+<!-- ── Main content ── -->
+<main class="main">
+
+  <div class="kicker"><span class="lang-zh">文章索引</span><span class="lang-en">Index</span></div>
+  <h1><span class="lang-zh">所有文章</span><span class="lang-en">All Writing</span></h1>
+  <p class="subtitle"><span class="lang-zh">技术 · 认知 · 思想 · Technology · Cognition · Ideas</span><span class="lang-en">Technology · Cognition · Ideas</span></p>
+
+  <hr class="divider">
+
+  <div class="writing-list">
+
+    <a class="writing-card" href="ai-productivity-amplifier.html">
+      <div class="writing-card-meta"><span class="lang-zh">认知科学 · 技术史 · AI</span><span class="lang-en">Cognitive Science · Technology History · AI</span></div>
+      <div class="writing-card-title"><span class="lang-zh">AI 作为效率放大器：工作原理与使用边界</span><span class="lang-en">AI as Productivity Amplifier: Working Principles and Usage Boundaries</span></div>
+      <div class="writing-card-desc"><span class="lang-zh">AI 是真实的效率放大器，但它的放大效果取决于任务的确定性。理解这个边界，是让 AI 真正为你服务的前提。</span><span class="lang-en">AI is a genuine productivity amplifier — but its amplification depends on task certainty. Understanding this boundary is the prerequisite for making AI genuinely work for you.</span></div>
+      <span class="writing-card-arrow">→</span>
+    </a>
+
+    <a class="writing-card" href="enlightenment-sadhguru.html">
+      <div class="writing-card-meta"><span class="lang-zh">精神探索 · 哲学 · Sadhguru</span><span class="lang-en">Spiritual Inquiry · Philosophy · Sadhguru</span></div>
+      <div class="writing-card-title"><span class="lang-zh">开悟：一项深度研究</span><span class="lang-en">Enlightenment — A Deep Research</span></div>
+      <div class="writing-card-desc"><span class="lang-zh">以 Sadhguru 的教导为线索，深入探索开悟的本质、路径与意义。</span><span class="lang-en">A deep investigation into the nature, path, and meaning of enlightenment, guided by Sadhguru's teachings.</span></div>
+      <span class="writing-card-arrow">→</span>
+    </a>
+
+  </div>
+
+  <p class="footer-note">nqluo.github.io · v2026.5.17</p>
+
+</main>
+
+<script>
+function toggleLang() {
+  const isEn = document.body.classList.toggle('en');
+  document.getElementById('lang-btn').textContent = isEn ? '中文' : 'ENG';
+  localStorage.setItem('index-lang', isEn ? 'en' : 'zh');
+}
+
+function toggleTheme() {
+  const isLight = document.body.classList.toggle('light');
+  document.getElementById('toggle-btn').textContent = isLight ? '🌙' : '☀';
+  localStorage.setItem('index-theme', isLight ? 'light' : 'dark');
+}
+
+(function () {
+  const savedTheme = localStorage.getItem('index-theme');
+  if (savedTheme === 'light') {
+    document.body.classList.add('light');
+    document.getElementById('toggle-btn').textContent = '🌙';
+  }
+  const savedLang = localStorage.getItem('index-lang');
+  if (savedLang === 'en') {
+    document.body.classList.add('en');
+    document.getElementById('lang-btn').textContent = '中文';
+  }
+})();
+</script>
+</body>
+</html>
